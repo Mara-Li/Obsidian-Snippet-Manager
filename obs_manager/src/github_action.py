@@ -23,7 +23,7 @@ def git_clone(repo_url):
     """
     folder_name = urlparse(repo_url).path[1:].split('/')[1]
     repo=Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
-    print(f'[link={repo_url}]{repo_url}[/link] was cloned in {BASEDIR}.')
+    print(f'[link={repo_url}]{repo_url}[/link] was cloned in [i u]{BASEDIR}.[/]')
     return repo.working_dir
 
 def git_pull(repo_path):
@@ -52,7 +52,7 @@ def move_to_obsidian(repo_path):
     css_files = [x for x in glob(os.path.join(str(repo_path), '**'), recursive=True) if x.endswith('css')]
     if len(css_files) > 0:
         for i in css_files:
-            shutil.copyfile(
+            shutil.copy(
                 i, snippets
             )
     return css_files
