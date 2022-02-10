@@ -43,3 +43,5 @@ You can create a commmand in Obsidian using [Obsidian Shell](https://github.com/
 ![](screenshot/shell_config2.png)
 ![](screenshot/shell_config3.png)
 *Bonus, you can update your snippet everytime obsidian start, like BRAT !*
+
+⚠️ **WARNING** : Every edit on snippet downloaded by this way will break the script. Please, DON'T EDIT these file, and use another snippet ! (Or, use a fork and commit before !)
