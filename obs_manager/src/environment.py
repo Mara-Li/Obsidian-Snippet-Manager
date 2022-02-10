@@ -27,8 +27,11 @@ def create_env():
         vault = str(
             console.input("Please provide your [u bold]obsidian vault[/] absolute path: ")
             )
-    while folder_snippet == "" or not os.path.isdir(folder_snippet):
-        folder_snippet = str(console.input("Please provide the [u bold] Snippet Manager[/] absolute path:"))
+    while folder_snippet == "":
+        folder_snippet = str(console.input("Please provide the [u bold]Snippet Manager Folder[/] absolute path: "))
+        if not os.path.isdir(Path(folder_snippet)):
+            Path(folder_snippet).mkdir(exist_ok=True)
+            console.print(f'[u bold]Snippet Manager Folder[/] created in [u]{folder_snippet}[/].')
     with open(env_path, "w", encoding="utf-8") as env:
         env.write(f"vault={vault}\n")
         env.write(f"folder_snippet={folder_snippet}\n")
