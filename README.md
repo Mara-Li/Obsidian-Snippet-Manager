@@ -31,6 +31,11 @@ The script will :
 - `obsnipe exclude [folder_name]` : Exclude a folder from update. You can exclude multiple value using : `obsnipe exclude [folder1] [folder2]`
 
 Note : You can exclude a folder from auto-update using the `exclude.yml` file, placed in your Snippet Manager folder. 
+You need to add the folder name as a yaml list :
+```yml
+- foldername1
+- foldername2
+```
 
 # Example 
 *Using [Obsidian Snippets Collection](https://github.com/Mara-Li/Obsidian-Snippet-collection)*
