@@ -32,7 +32,7 @@ def main():
         repo_path=github_action.git_clone(args.add)
         css_file=github_action.move_to_obsidian(repo_path)
         if len(css_file) > 0:
-            console.print(f'🎉[u]{args.add}[/] successfull added to Obsidian.')
+            console.print(f'🎉 [u]{args.add}[/] successfull added to Obsidian.')
         else:
             console.print(f'🤨 There is no CSS file in {args.add}.')
     elif args.update:
