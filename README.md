@@ -6,7 +6,7 @@ The goal is to provide a pratical way to get semi-auto-update from css snippet h
 ## Requirements
 1. [Git](https://git-scm.com/downloads)
 2. [Python](https://www.python.org/downloads/)
-3. `pip install obs-snippets`
+3. `pip install Obsidian-Snippet-Manager`
 
 ## Environment
 The plugin needs :
@@ -16,9 +16,10 @@ This folder can be everywhere on your computer (yes, it can be in `.obsidian` to
     _In case of the folder doesn't exist, the script will create it !_
 
 ## How to use
-1. Adding a new repo : `obsnipe --add repository_url`
+1. Adding a new repo : `obsnipe clone repository_url`  
+    Additionnaly you can exclude a folder from update with adding the `--exclude` command : `obsnipe clone --excluded [repository_url]`
 2. Updating everything : `obsnipe`
-3. Updating only a repository : `obsnipe --update folder_name` 
+3. Updating only a repository : `obsnipe update folder_name` 
     The foldername is the folder that you want to update the snippet !
 
 The script will :
@@ -26,8 +27,10 @@ The script will :
 - Git move every `.css` file in your `.obsidian/snippet` folder. 
 
 ## Other function
-- `obsnipe --list` : List all Github Repository you download.
-- 
+- `obsnipe list` : List all Github Repository you download.
+- `obsnipe exclude [folder_name]` : Exclude a folder from update. You can exclude multiple value using : `obsnipe exclude [folder1] [folder2]`
+
+Note : You can exclude folder from auto update using the `exclude.yml` file, placed in your Snipper Manager folder. 
 
 # Example 
 *Using [Obsidian Snippets Collection](https://github.com/Mara-Li/Obsidian-Snippet-collection)*
@@ -37,7 +40,7 @@ The script will :
 2. `obsnipe --add https://github.com/Mara-Li/Obsidian-Snippet-collection`
 3. Active the snippets 🎉
 
-To update this specific snippet : `obs-snippets --update Obsidian-Snippet-collection`
+To update this specific snippet : `obsnipe update Obsidian-Snippet-collection`
 
 # In obsidian 
 
