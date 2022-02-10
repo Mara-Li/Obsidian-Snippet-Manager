@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v1.1.0 (2022-02-10)
+### Feature
+* Reformat the help command ([`2c7acb6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/2c7acb66b914b0fe439fa99892253b4927dc82c1))
+* Add a way to exclude folder ([`7163fbc`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/7163fbc34b1a2f87f6382986dce216757761d37b))
+
 ## v1.0.0 (2022-02-10)
 ### Feature
 * Rename the script ([`6a18ea6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/6a18ea6189c0e4f211bf947935fb2e3f38216842))
