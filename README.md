@@ -37,7 +37,7 @@ Note : You can exclude folder from auto update using the `exclude.yml` file, pla
 1. Configuration : 
     - Vault is in : `G:/Drive/vault`
     - My Obsidian Manager Folder is in : `D:/Documents/Github/Snippets Manager`
-2. `obsnipe --add https://github.com/Mara-Li/Obsidian-Snippet-collection`
+2. `obsnipe clone https://github.com/Mara-Li/Obsidian-Snippet-collection`
 3. Active the snippets 🎉
 
 To update this specific snippet : `obsnipe update Obsidian-Snippet-collection`
