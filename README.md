@@ -27,4 +27,4 @@ The script will :
 
 To use directly on obsidian, you need to use [Obsidian Shell](https://github.com/Taitava/obsidian-shellcommands). 
 
-:warning: YOU WILL LOST EVERY EDIT YOU DO ON THESES GITHUB SNIPPETS !
+⚠️ YOU WILL LOST EVERY EDIT YOU DO ON THESES GITHUB SNIPPETS !
