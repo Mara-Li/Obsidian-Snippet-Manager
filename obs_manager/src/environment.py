@@ -41,9 +41,9 @@ def create_env():
             console.print(
                 f"[u bold]Snippet Manager Folder[/] created in [u]{folder_snippet}[/]."
             )
-        excluded=os.path.join(folder_snippet, 'exclude.yml')
+        excluded = os.path.join(folder_snippet, "exclude.yml")
         if not os.path.isfile(Path(excluded)):
-            f=open(excluded, 'w', encoding='utf-8')
+            f = open(excluded, "w", encoding="utf-8")
             f.close()
     with open(env_path, "w", encoding="utf-8") as env:
         env.write(f"vault={vault}\n")

@@ -64,13 +64,14 @@ def move_to_obsidian(repo_path):
             shutil.copy(i, snippets)
     return css_files
 
+
 def exclude_folder(repo_path):
     """
     Add the foldername to exclude.yml to prevent it to update.
     :param repo_path: The repo to exclude from update
     :return: /
     """
-    excluded=os.path.join(BASEDIR, 'exclude.yml')
+    excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
-    with open(excluded, 'a', encoding='utf-8') as f:
-        f.write(f'- {repo_name}')
+    with open(excluded, "a", encoding="utf-8") as f:
+        f.write(f"- {repo_name}")

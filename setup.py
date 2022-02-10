@@ -11,9 +11,12 @@ setup(
     author="Mara-Li",
     author_email="mara_li@icloud.com",
     packages=find_packages(),
-    install_requires=["rich", "python-dotenv", "GitPython", 'PyYAML'],
+    install_requires=["rich", "python-dotenv", "GitPython", "PyYAML"],
     license="AGPL",
-    keywords="Obsidian, Obsidian.md, css, update, manager, obsidian snippet manager, snippets, snippet",
+    keywords=(
+        "Obsidian, Obsidian.md, css, update, manager, obsidian snippet manager,"
+        " snippets, snippet"
+    ),
     classifiers=[
         "Natural Language :: English",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later"

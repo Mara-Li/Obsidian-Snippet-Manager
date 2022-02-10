@@ -24,8 +24,10 @@ def main():
 
             # retrieve subparsers from parser
             subparsers_actions = [
-                action for action in parser._actions
-                if isinstance(action, argparse._SubParsersAction)]
+                action
+                for action in parser._actions
+                if isinstance(action, argparse._SubParsersAction)
+            ]
             # there will probably only be one subparser_action,
             # but better save than sorry
             for subparsers_action in subparsers_actions:
@@ -39,11 +41,15 @@ def main():
     console = Console()
     parser = argparse.ArgumentParser(
         description="Git pull and copy the css files in .obsidian/snippet",
-        add_help=False
+        add_help=False,
     )
-    parser.add_argument('--help', action=_HelpAction, help='show this help message and exit')
-    subparser=parser.add_subparsers(dest='cmd')
-    parser_clone=subparser.add_parser('clone', help="Clone a repository and add the snippet to Obsidian")
+    parser.add_argument(
+        "--help", action=_HelpAction, help="show this help message and exit"
+    )
+    subparser = parser.add_subparsers(dest="cmd")
+    parser_clone = subparser.add_parser(
+        "clone", help="Clone a repository and add the snippet to Obsidian"
+    )
     parser_clone.add_argument(
         "repository",
         help="Clone a new repository",
@@ -53,19 +59,27 @@ def main():
         "--excluded",
         "--e",
         "--no",
-        help='Exclude this repository from update',
-        action='store_true'
-        )
-    parser_update = subparser.add_parser('update', help='Update a specific CSS snippet.')
+        help="Exclude this repository from update",
+        action="store_true",
+    )
+    parser_update = subparser.add_parser(
+        "update", help="Update a specific CSS snippet."
+    )
     parser_update.add_argument(
         "repository_name",
         help="The repo you want to update",
         action="store",
     )
-    parser_config=subparser.add_parser('configuration', help='Edit the configuration file')
+    parser_config = subparser.add_parser(
+        "configuration", help="Edit the configuration file"
+    )
 
-    parser_list = subparser.add_parser('list', help='List all Github Repository you cloned.')
-    parser_exclude=subparser.add_parser("exclude", help='Exclude repository from update')
+    parser_list = subparser.add_parser(
+        "list", help="List all Github Repository you cloned."
+    )
+    parser_exclude = subparser.add_parser(
+        "exclude", help="Exclude repository from update"
+    )
     parser_exclude.add_argument(
         "exclude", help="Exclude repository from the update", action="store", nargs="+"
     )
@@ -83,20 +97,22 @@ def main():
     else:
         f = open(exclude_file, "w", encoding="utf-8")
         f.close()
-    if args.cmd=="exclude":
+    if args.cmd == "exclude":
         exclude = args.exclude + exclude
-    if args.cmd=="clone":
+    if args.cmd == "clone":
         repo_path = github_action.git_clone(args.repository)
         css_file = github_action.move_to_obsidian(repo_path)
         if len(css_file) > 0:
             console.print(f"🎉 [u]{args.repository}[/] successfull added to Obsidian.")
         else:
             console.print(f"🤨 There is no CSS file in {args.repository}.")
-    elif args.cmd=="update":
+    elif args.cmd == "update":
         all_folder = [
             x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
         ]
-        repo_name = [x for x in all_folder if os.path.basename(x) == args.repository_name]
+        repo_name = [
+            x for x in all_folder if os.path.basename(x) == args.repository_name
+        ]
         if len(repo_name) > 0:
             repo_path = Path(repo_name[0])
             github_action.git_pull(repo_path)
@@ -106,12 +122,15 @@ def main():
             if len(css_file) > 0:
                 console.print(f"🎉 [u]{args.repository_name}[/] successfully updated.")
             else:
-                console.print(f"🤨 There is no CSS file in [u]{args.repository_name}[/].")
+                console.print(
+                    f"🤨 There is no CSS file in [u]{args.repository_name}[/]."
+                )
         else:
             console.print(
-                "[u]This repository doesn't exists[/]. Did you use the correct folder name ?"
+                "[u]This repository doesn't exists[/]. Did you use the correct folder"
+                " name ?"
             )
-    elif args.cmd=="list":
+    elif args.cmd == "list":
         all_folder = [
             os.path.basename(x)
             for x in glob(os.path.join(str(BASEDIR), "**"))
