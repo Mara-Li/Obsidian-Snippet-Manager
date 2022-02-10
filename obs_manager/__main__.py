@@ -22,6 +22,7 @@ def main():
     parser.add_argument('--add', '--new', '--a', help="Clone a new repository", action="store", required=False)
     parser.add_argument('--update', '--u', help='The repo you want to update', action='store', required=False)
     parser.add_argument('--config', '--c', help='Edit the configuration file', action="store_true")
+    parser.add_argument('--list', help='List all Github Repository you clone.', action="store_true")
     args = parser.parse_args()
     if args.config:
         environment.create_env()
@@ -48,6 +49,18 @@ def main():
                 console.print(f'🤨 There is no CSS file in [u]{args.update}[/].')
         else:
             console.print("[u]This repository doesn't exists[/]. Did you use the correct folder name ?")
+    elif args.list:
+        all_folder = [os.path.basename(x) for x in glob(os.path.join(str(BASEDIR), '**')) if
+                      os.path.isdir(x)]
+        if len(all_folder) > 1:
+            folder_msg='\n- '.join(all_folder)
+            folder_msg = f"[u] The repository present are :[/]\n- {folder_msg}"
+        elif len(all_folder) == 1:
+            folder_msg = ''.join(all_folder)
+            folder_msg = f"The repository present is [u]{folder_msg}[/]"
+        else:
+            folder_msg = f"[u]There is no repository in {BASEDIR}[/]"
+        console.print(folder_msg)
     else:
         all_folder = [x for x in glob(os.path.join(str(BASEDIR), '**')) if os.path.isdir(x)]
         info = []
