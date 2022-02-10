@@ -4,7 +4,7 @@ version="1.0.1"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 setup(
-    name="obs-snippets",
+    name="Obsidian_Snippet_Manager",
     python_requires=">=3.7",
     version=version,
     description='A script to magically update your obsidian snippets hosted on github.',
@@ -32,6 +32,6 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Mara-Li/Obsidian-Snippet-Manager",
     entry_points={
-        "console_scripts":["obs-snippets=obs_manager.__main__:main"]
+        "console_scripts":["obsnipe=obs_manager.__main__:main"]
         },
     )
