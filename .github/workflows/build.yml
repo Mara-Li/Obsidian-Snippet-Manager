@@ -33,8 +33,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip cx_Freeze pytest
           pip install -r requirements.txt
-      - name: Test with pytest
-        run: pytest
+
 
       - name: Build with CxFreeze
         run: python setup_cx.py build
