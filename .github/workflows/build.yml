@@ -58,6 +58,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        sudo apt-get install python3-tk
         pip install tkinter
         pip install -r requirements.txt
     - name: Build with pyinstaller for ${{matrix.TARGET}}
