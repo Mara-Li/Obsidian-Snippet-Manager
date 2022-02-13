@@ -35,11 +35,11 @@ jobs:
 
 
       - name: Build with CxFreeze
-        run: cxfreeze -c .\obs_manager\src\menu.py --target-dir app/${{ matrix.os }}
+        run: cxfreeze -c .\obs_manager\src\menu.py --target-dir app/app-${{ matrix.os }}
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
         with:
           name: app-${{ matrix.os }}
-          path: app/${{ matrix.os }}
+          path: app/app-${{ matrix.os }}
           if-no-files-found: error
