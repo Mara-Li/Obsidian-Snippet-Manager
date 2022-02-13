@@ -2,6 +2,5 @@ rich==11.2.0
 python-dotenv~=0.19.2
 setuptools==60.8.2
 PyYAML~=6.0
-
-ttkthemes~=3.2.2
+ttkthemes
 Pillow~=9.0.1
