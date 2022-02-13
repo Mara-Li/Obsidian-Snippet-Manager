@@ -101,11 +101,14 @@ def main():
         exclude = args.exclude + exclude
     if args.cmd == "clone":
         repo_path = github_action.git_clone(args.repository)
-        css_file = github_action.move_to_obsidian(repo_path)
-        if len(css_file) > 0:
-            console.print(f"🎉 [u]{args.repository}[/] successfull added to Obsidian.")
-        else:
-            console.print(f"🤨 There is no CSS file in {args.repository}.")
+        if repo_path != "0":
+            css_file = github_action.move_to_obsidian(repo_path)
+            if len(css_file) > 0:
+                console.print(
+                    f"🎉 [u]{args.repository}[/] successfull added to Obsidian."
+                )
+            else:
+                console.print(f"🤨 There is no CSS file in {args.repository}.")
     elif args.cmd == "update":
         all_folder = [
             x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
