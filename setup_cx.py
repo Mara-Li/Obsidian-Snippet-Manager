@@ -3,14 +3,14 @@ import os
 from cx_Freeze import Executable, setup
 
 base = None
-folder='Windows'
+folder='windows-latest'
 if sys.platform == "win32":
     base = "Win32GUI"
     folder = "Windows"
 elif sys.platform.startswith('linux'):
-    folder='Linux'
+    folder='ubuntu-latest'
 elif sys.platform.startswith('darwin'):
-    folder='MacOS'
+    folder='macos-latest'
 option_folder = os.path.join('app', folder)
 
 menu = os.path.join('obs_manager', 'src', 'menu.py')
