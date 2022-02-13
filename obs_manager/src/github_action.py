@@ -5,10 +5,9 @@ import os.path
 import sys
 from pathlib import Path
 import git
-from git import Repo
+from git import Repo, exc
 from rich import print
 from glob import glob
-import yaml
 import shutil
 from urllib.parse import urlparse
 
@@ -25,9 +24,13 @@ def git_clone(repo_url):
     :return: /
     """
     folder_name = urlparse(repo_url).path[1:].split("/")[1]
-    repo = Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
-    print(f"[link={repo_url}]{repo_url}[/link] was cloned in [i u]{BASEDIR}.[/]")
-    return repo.working_dir
+    try:
+        repo = Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
+        print(f"[link={repo_url}]{repo_url}[/link] was cloned in [i u]{BASEDIR}.[/]")
+        return repo.working_dir
+    except exc.GitCommandError:
+        print(f"[link={repo_url}]{repo_url}[/link] doesn't exists !")
+        return "0"
 
 
 def git_pull(repo_path):
@@ -74,4 +77,4 @@ def exclude_folder(repo_path):
     excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
     with open(excluded, "a", encoding="utf-8") as f:
-        f.write(f"- {repo_name}")
+        f.write(f"- {repo_name}\n")
