@@ -36,5 +36,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-${{ matrix.os }}
-          path: app/app-${{ matrix.os }}
+          path: app/${{ matrix.os }}
           if-no-files-found: error
