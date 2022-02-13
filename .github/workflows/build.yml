@@ -37,3 +37,22 @@ jobs:
           name: app-${{ matrix.os }}
           path: app/${{ matrix.os }}-Manager
           if-no-files-found: error
+      - name: create release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: upload windows artifact
+        uses: actions/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          assets_path: app/${{ matrix.os }}-Manager
+          assets_name: Obsidian_Snippet_Manager-Windows.zip
+          assets_content_type: application/zip
