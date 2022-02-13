@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2022-02-13)
+### Documentation
+* **requirements:** Fix ttkthemes ([`4c6c9f3`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4c6c9f34198b10949df22ed58c58284c2c57ddf1))
+
 ## v2.0.0 (2022-02-13)
 ### Feature
 * **GUI:** Create GUI for better usage ; add build workflow ([`bb5067b`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/bb5067ba498b163e25aecd4655935dc07f76abf4))
