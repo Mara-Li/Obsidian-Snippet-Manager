@@ -32,13 +32,13 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          python -m pip install --upgrade pip pyinstaller pytest
+          python -m pip install --upgrade pip cx_Freeze pytest
           pip install -r requirements.txt
       - name: Test with pytest
         run: pytest
 
-      - name: Build with pyinstaller
-        run: pyinstaller --onefile --name=app-${{ matrix.os }} main.py
+      - name: Build with CxFreeze
+        run: python setup_cx.py build
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
