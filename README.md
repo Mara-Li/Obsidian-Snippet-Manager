@@ -57,3 +57,7 @@ You can create a command in Obsidian using [Obsidian Shell](https://github.com/T
 *Bonus, you can update your snippet every time obsidian start, like BRAT!*
 
 ⚠️ **WARNING** : Every edit on a snippet downloaded by this way will break the script. Please, DON'T EDIT these file, and use another snippet. (Or, use a fork and commit before.)
+
+# Credit
+- <a href="https://www.flaticon.com/free-icons/manual" title="manual icons">Manual icons created by LAFS - Flaticon</a>
+- [Boxicon](https://boxicons.com/)
