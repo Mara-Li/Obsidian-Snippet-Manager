@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip cx_Freeze 
           pip install -r requirements.txt
       - name: Build with CxFreeze
-        run: python .\setup_cx.py build
+        run: python setup_cx.py build
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
