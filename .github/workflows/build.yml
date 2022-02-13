@@ -35,7 +35,7 @@ jobs:
 
 
       - name: Build with CxFreeze
-        run: python setup_cx.py build
+        run: python setup_cx.py build --target-dir app
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
