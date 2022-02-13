@@ -1,14 +1,16 @@
 import sys
-
+import os
 from cx_Freeze import Executable, setup
 
 base = None
 if sys.platform == "win32":
     base = "Win32GUI"
 
+menu = os.path.join('obs_manager', 'src', 'menu.py')
+ico = os.path.join('obs_manager', 'GUI', 'hand.ico')
 executables = [
     Executable(
-        "obs_manager\src\menu.py", base=base, icon="obs_manager\GUI\hand.ico"
+        menu, base=base, icon=ico
     )
 ]
 
