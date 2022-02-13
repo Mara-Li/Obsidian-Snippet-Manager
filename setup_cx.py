@@ -15,7 +15,7 @@ option_folder = os.path.join('app', folder)
 
 menu = os.path.join('obs_manager', 'src', 'menu.py')
 ico = os.path.join('obs_manager', 'GUI', 'hand.ico')
-options = {'build_exe':{'build_exe': option_folder}}
+options = {'build_exe':{'build_exe': option_folder, includes_files=[obs_manager]}}
 executables = [
     Executable(
         menu, base=base, icon=ico
