@@ -9,6 +9,8 @@ with open("requirements.txt") as f:
 setup(
     name="Obsidian_Snippet_Manager",
     python_requires=">=3.7",
+    include_package_data=True,
+    package_data={'':['*.png', '*.ico']},
     version=version,
     description="A script to magically update your obsidian snippets hosted on github.",
     author="Mara-Li",
