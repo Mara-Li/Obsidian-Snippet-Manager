@@ -3,6 +3,9 @@ from setuptools import setup, find_packages
 version = "1.1.0"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+with open("requirements.txt") as f:
+    required = f.read().splitlines()
+
 setup(
     name="Obsidian_Snippet_Manager",
     python_requires=">=3.7",
@@ -11,7 +14,7 @@ setup(
     author="Mara-Li",
     author_email="mara_li@icloud.com",
     packages=find_packages(),
-    install_requires=["rich", "python-dotenv", "GitPython", "PyYAML"],
+    install_requires=required,
     license="AGPL",
     keywords=(
         "Obsidian, Obsidian.md, css, update, manager, obsidian snippet manager,"
