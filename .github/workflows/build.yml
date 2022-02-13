@@ -27,10 +27,12 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          python -m pip install --upgrade pip cx_Freeze 
+          python -m pip install --upgrade pip pyinstaller 
           pip install -r requirements.txt
       - name: Build
-        run: pyinstaller obs_manager/GUI/__main__.py --name "Manager" --windowed --i obs_manager/GUI/hand.ico --noconfirm --add-data 'obs_manager/GUI/*;obs_manager/GUI'
+        run: pyinstaller obs_manager/GUI/__main__.py --name "${{matrix
+        .os}}-Manager" --windowed --i obs_manager/GUI/hand.ico --noconfirm --add-data
+        'obs_manager/GUI/*;obs_manager/GUI' --distpath app
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
