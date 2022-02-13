@@ -2,7 +2,7 @@
 
 <!--next-version-placeholder-->
 
-## v2.1.0 (2022-02-13)
+## v2.0.1 (2022-02-13)
 ### Documentation
 * **requirements:** Fix ttkthemes ([`4c6c9f3`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4c6c9f34198b10949df22ed58c58284c2c57ddf1))
 
