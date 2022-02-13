@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.4 (2022-02-13)
+
+
 ## v2.0.3 (2022-02-13)
 ### Fix
 * **GUI:** Fix refresh snippet ([`7dd4799`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/7dd47997ddd65f68af51fcad8c0b9099dba5d128))
