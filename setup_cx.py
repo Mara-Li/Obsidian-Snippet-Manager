@@ -6,7 +6,7 @@ base = None
 folder='windows-latest'
 if sys.platform == "win32":
     base = "Win32GUI"
-    folder = "Windows"
+    folder = "windows-latest"
 elif sys.platform.startswith('linux'):
     folder='ubuntu-latest'
 elif sys.platform.startswith('darwin'):
