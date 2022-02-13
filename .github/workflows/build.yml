@@ -35,7 +35,7 @@ jobs:
 
 
       - name: Build with CxFreeze
-        run: cxfreeze -c .\obs_manager\src\menu.py --target-dir app/app-${{ matrix.os }}
+        run: cxfreeze -c .\obs_manager\src\menu.py --target-dir app/app-${{ matrix.os }} --target-name Obsidian_Snippet_Manager
 
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
