@@ -2,6 +2,23 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.0 (2022-02-13)
+### Feature
+* **GUI:** Create GUI for better usage ; add build workflow ([`bb5067b`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/bb5067ba498b163e25aecd4655935dc07f76abf4))
+* **GUI:** Add ttk and Pillow ([`4372ca5`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4372ca5cca08b87fb3d92b01801c421440232a8d))
+
+### Fix
+* **github:** Add git exception ([`88e9edd`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/88e9edde2f6e83dbdb6ac495b5d47b4c38cc0812))
+* **github:** Add git exception ([`67a9ed5`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/67a9ed53ed7bceb7be5559717cdb8b943d18e3ed))
+* **setup:** Add requirements as install_requires values ([`ec48b33`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/ec48b33f13987eb818aed30762efa1b50aa90a1c))
+
+### Documentation
+* **GUI:** Add icons ([`72dfd4a`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/72dfd4acd69d2ee622946338fdbfd510bf5fd716))
+* **GUI:** Add icon credits ([`55e31fa`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/55e31fa8172dbf74626b70ddaad0249ae5187d81))
+* **readme:** Add info about exclude.yml ([`25c6eb6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/25c6eb6a792dcec98ee0d253fb31f296a946e74d))
+* **readme:** Typo ([`90adf80`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/90adf80ac53e0cfd64cc36c7f396a0c3d2cb0557))
+* **readme:** Fix #2 ([`9a3b7fe`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/9a3b7feeaebea452877fe31936b5c17f2530f168))
+
 ## v1.1.0 (2022-02-10)
 ### Feature
 * Reformat the help command ([`2c7acb6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/2c7acb66b914b0fe439fa99892253b4927dc82c1))
