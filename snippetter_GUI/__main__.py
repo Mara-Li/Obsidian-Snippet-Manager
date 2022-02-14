@@ -9,7 +9,7 @@ from PIL import Image
 from PIL import ImageTk
 from tkinter import ttk, filedialog
 from ttkthemes import ThemedTk
-import obs_manager as manager
+import snippetter_GUI as manager
 from tkinter.messagebox import showerror, showinfo
 import os.path
 from glob import glob
@@ -72,7 +72,8 @@ def exclude_folder(repo_path):
         f.write(f"- {repo_name}\n")
 
 
-if __name__=="__main__":
+
+def main():
     root = ThemedTk(theme="breeze")
     root.title("Obsidian Snippets Manager")
     image_path = os.path.join(manager.__path__[0], "GUI", "hand.png")
@@ -406,3 +407,7 @@ if __name__=="__main__":
     exclude_button.grid(column=0, row=3, sticky="ew")
     refresh_exclude.grid(column=0, row=3, sticky='ne')
     root.mainloop()
+    
+    
+if __name__='__main__':
+    main()
