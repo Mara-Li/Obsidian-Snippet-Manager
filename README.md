@@ -9,6 +9,8 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 3. `pip install Obsidian-Snippet-Manager`
 
 # GUI
+![](screenshot/GUI_snippeter.gif)
+
 You can use the application with an interface, using (in terminal): `snipetter`.
 To get a `.app` or `.exe` you can :
 - Wait to my success to create a build using GitHub Actions (you can help)
