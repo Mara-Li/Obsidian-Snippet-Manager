@@ -10,7 +10,6 @@ setup(
     name="Obsidian_Snippet_Manager",
     python_requires=">=3.7",
     include_package_data=True,
-    package_data={'':['*.png', '*.ico']},
     version=version,
     description="A script to magically update your obsidian snippets hosted on github.",
     author="Mara-Li",
@@ -35,5 +34,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Mara-Li/Obsidian-Snippet-Manager",
-    entry_points={"console_scripts": ["obsnipe=obs_manager.__main__:main", "snipetter=snippetter_GUI.__main__:main"]},
+    entry_points={
+        "console_scripts": [
+            "obsnipe=Obsidian_Snippeter.CLI:main",
+            "snipetter=Obsidian_Snippeter.GUI:main",
+        ]
+    },
 )

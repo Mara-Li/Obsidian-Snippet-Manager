@@ -2,20 +2,14 @@
 Provide all git actions the script needs
 """
 import os.path
-import sys
-from pathlib import Path
-import git
-from git import Repo, exc
-from rich import print
-from glob import glob
 import shutil
+from glob import glob
+from pathlib import Path
 from urllib.parse import urlparse
 
+import git
+from git import Repo, exc
 from obs_manager.src import environment
-
-global_value = environment.get_environments()
-BASEDIR = global_value[0]
-VAULT = global_value[1]
 
 
 def git_clone(repo_url):
@@ -23,14 +17,16 @@ def git_clone(repo_url):
     :param repo_url: The repository to clone
     :return: /
     """
+    global_value = environment.get_environments()
+    BASEDIR = global_value[0]
     folder_name = urlparse(repo_url).path[1:].split("/")[1]
+    if os.path.isdir(os.path.join(BASEDIR, str(folder_name))):
+        return "Already exists", False
     try:
         repo = Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
-        print(f"[link={repo_url}]{repo_url}[/link] was cloned in [i u]{BASEDIR}.[/]")
-        return repo.working_dir
+        return repo.working_dir, True
     except exc.GitCommandError:
-        print(f"[link={repo_url}]{repo_url}[/link] doesn't exists !")
-        return "0"
+        return "0", False
 
 
 def git_pull(repo_path):
@@ -43,9 +39,9 @@ def git_pull(repo_path):
         repo = Repo(repo_path)
         snippet = repo.remotes.origin
         snippet.pull()
+        return "0"
     except git.GitCommandError as exc:
-        print(f":warning: [red] Git returns an error :[/] {exc}")
-        sys.exit(1)
+        return exc
 
 
 def move_to_obsidian(repo_path):
@@ -54,6 +50,8 @@ def move_to_obsidian(repo_path):
     :param repo_path: The repo to move the files
     :return: /
     """
+    global_value = environment.get_environments()
+    VAULT = global_value[1]
     snippets = os.path.join(VAULT, ".obsidian", "snippets")
     Path(snippets).mkdir(exist_ok=True)  # Create snippets folder if not exists
     # Get all css files
@@ -74,6 +72,8 @@ def exclude_folder(repo_path):
     :param repo_path: The repo to exclude from update
     :return: /
     """
+    global_value = environment.get_environments()
+    BASEDIR = global_value[0]
     excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
     with open(excluded, "a", encoding="utf-8") as f:
