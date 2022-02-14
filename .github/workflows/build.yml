@@ -34,6 +34,7 @@ jobs:
         if: matrix.os != 'macos-latest'
         run: |
           python -m pip install --upgrade pip pyinstaller
+          pip install -r requirements.txt
       - name: Build windows
         if: matrix.os == 'windows-latest'
         run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath app
