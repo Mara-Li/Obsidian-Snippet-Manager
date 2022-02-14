@@ -1,6 +1,9 @@
 name: Build
 
-on: [push]
+on:
+  push:
+    tags:
+       - 'v*'
 
 defaults:
   run:
@@ -24,19 +27,28 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.10.0
 
-      - name: Install Python dependencies
+      - name: Install Python dependencies Without MacOS
+        if: matrix.os != "macos-latest"
         run: |
+          echo ${{ matrix.os}}
           python -m pip install --upgrade pip pyinstaller 
-          pip install -r requirements.txt
-      - name: Build
-        run: pyinstaller obs_manager/GUI/__main__.py --name "${{matrix.os}}-Manager" --windowed --i obs_manager/GUI/hand.ico --noconfirm --add-data 'obs_manager/GUI/*;obs_manager/GUI' --distpath app
+      - name: Build windows
+        if: matrix.os == 'windows-latest'
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath app
       - name: Build Ubuntu
-        if: always()
-        run: pyinstaller obs_manager/GUI/__main__.py --name "${{matrix.os}}-Manager" --windowed --i obs_manager/GUI/hand.ico --noconfirm --add-data 'obs_manager/GUI/*:obs_manager/GUI' --distpath app
+        if: matrix.os == 'ubuntu-latest'
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
+      - name: Build MacOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install python-tk@3.9 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+          pip install pyinstaller
+          pip install -r requirements.txt
+                  run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
+          
       - name: Deploy artifacts
-        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: app-${{ matrix.os }}

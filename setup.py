@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = "2.0.6"
+version = "2.0.3"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 with open("requirements.txt") as f:
@@ -10,7 +10,6 @@ setup(
     name="Obsidian_Snippet_Manager",
     python_requires=">=3.7",
     include_package_data=True,
-    package_data={'':['*.png', '*.ico']},
     version=version,
     description="A script to magically update your obsidian snippets hosted on github.",
     author="Mara-Li",
@@ -35,5 +34,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Mara-Li/Obsidian-Snippet-Manager",
-    entry_points={"console_scripts": ["obsnipe=obs_manager.__main__:main", "obs-manager=obs_manager.gui.__main__:main"]},
+    entry_points={
+        "console_scripts": [
+            "obsnipe=Obsidian_Snippeter.CLI:main",
+            "snipetter=Obsidian_Snippeter.GUI:main",
+        ]
+    },
 )
