@@ -8,6 +8,15 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 2. [Python](https://www.python.org/downloads/)
 3. `pip install Obsidian-Snippet-Manager`
 
+# GUI
+You can use the application with an interface, using (in terminal): `snipetter`.
+To get a `.app` or `.exe` you can :
+- Wait to my success to create a build using GitHub Actions (you can help)
+- Use `pyinstaller` on this repo, with `pip install pyinstaller && pyinstaller Obsidian_Snippeter/GUI.py --name "Snippeter" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app`
+
+
+
+# CLI
 ## Environment
 The plugin needs :
 - The **absolute** path of your vault, as : `G:\Drive\Vault`
