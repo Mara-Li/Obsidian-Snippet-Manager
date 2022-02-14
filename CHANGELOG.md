@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.4 (2022-02-14)
+### Feature
+* Refactoring ([`17f1d65`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/17f1d65378f6a18ecfc85c2d35e86928ec7dbbab))
+* **refactoring:** Refactor folder ([`b8633db`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b8633db79263a19ba916065137ee21312740e2ff))
+
+### Fix
+* **GUI:** Typo ([`61c615f`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/61c615fb112345b606e50070bedcbc462bb5d44b))
+* **file:** Refactor folder ([`f5774a4`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/f5774a45cb3bdd02c63267fbd18dbaa9d5fbe59a))
+
 ## v2.0.3 (2022-02-13)
 ### Fix
 * **GUI:** Fix refresh snippet ([`7dd4799`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/7dd47997ddd65f68af51fcad8c0b9099dba5d128))
