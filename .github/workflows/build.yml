@@ -46,7 +46,7 @@ jobs:
           brew install python-tk@3.9 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
           pip install pyinstaller
           pip install -r requirements.txt
-                  run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
+          pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
           
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
