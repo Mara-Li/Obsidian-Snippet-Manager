@@ -35,5 +35,5 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Mara-Li/Obsidian-Snippet-Manager",
-    entry_points={"console_scripts": ["obsnipe=obs_manager.__main__:main", "obs-manager=obs_manager.gui.__main__:main"]},
+    entry_points={"console_scripts": ["obsnipe=obs_manager.__main__:main", "snipetter=snippetter_GUI.__main__:main"]},
 )
