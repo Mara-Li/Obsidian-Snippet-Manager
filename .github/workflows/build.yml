@@ -62,10 +62,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        id: download
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: build/*
+          files: ${{steps.download.outputs.download-path}}/*
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           prerelease: true
