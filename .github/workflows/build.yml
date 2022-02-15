@@ -52,7 +52,7 @@ jobs:
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ matrix.os }}
+          name: build-${{ matrix.os }}.zip
           path: artifact/${{ matrix.os }}-Manager
           if-no-files-found: error
   release:
@@ -65,28 +65,10 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
-      - name: Zip MacOS
-        uses: vimtor/action-zip@v1
-        with:
-          files: ${{steps.download.outputs.download-path}}/build-macos-latest
-          dest: build-macos.zip
-      - name: Zip Windows
-        uses : vimtor/action-zip@v1
-        with:
-          files: ${{steps.download.outputs.download-path}}/build-windows-latest
-          dest: build-windows.zip
-      - name: Zip ubuntu
-        uses : vimtor/action-zip@v1
-        with:
-          files: ${{steps.download.outputs.download-path}}/build-ubuntu-latest
-          dest: build-ubuntu.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            build-windows.zip
-            build-macos.zip
-            build-ubuntu.zip
+          files: ${{steps.download.outputs.download-path}}/*
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           prerelease: true
