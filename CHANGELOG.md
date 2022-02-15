@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2022-02-15)
+### Fix
+* **gui:** Fix selecting when no files are found ([`6d85729`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/6d8572924a78ccb9154fd4cb8c6a9855432a92a4))
+* **GUI:** Fix update after changing environment ([`b41e708`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b41e7084043aa05601d04bf125e3f1e0e5f87932))
+
+### Documentation
+* **docstring:** Add docstring ([`3ddc770`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3ddc7707bdfa7e3c3377a994940203da04cc2067))
+
 ## v2.0.6 (2022-02-15)
 ### Fix
 * **build:** Use upload release action instead ([`9c3735c`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/9c3735ca57174538875112a9d33104c41b9c232b))

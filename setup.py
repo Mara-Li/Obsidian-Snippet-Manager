@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = "2.0.6"
+version = "2.1.0"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 with open("requirements.txt") as f:
