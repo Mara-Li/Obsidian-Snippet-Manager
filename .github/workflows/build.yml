@@ -64,6 +64,8 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
+        with: 
+          name: build
       - name: Display structure of downloaded files
         run: |
           sudo apt install zip
@@ -72,7 +74,7 @@ jobs:
           zip macOS.zip build-macos-latest
           zip windows.zip build-windows-latest
           zip ubuntu.zip build-ubuntu-latest
-        working-directory: ${{steps.download.outputs.download-path}}/artifact
+        working-directory: ${{steps.download.outputs.download-path}}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
