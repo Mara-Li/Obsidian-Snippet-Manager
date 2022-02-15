@@ -65,10 +65,26 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
+      - name: Zip MacOS
+        uses: vimtor/action-zip@1
+        with:
+          file: ${{steps.download.outputs.download-path}}/build-macos-latest
+          dest: build-macos.zip
+      - name: Zip Windows
+        with:
+          file: ${{steps.download.outputs.download-path}}/build-windows-latest
+          dest: build-windows.zip
+      - name: Zip ubuntu
+        with:
+          file: ${{steps.download.outputs.download-path}}/build-ubuntu-latest
+          dest: build-ubuntu.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{steps.download.outputs.download-path}}/*/*
+          files: |
+            build-windows.zip
+            build-macos.zip
+            build-ubuntu.zip
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           prerelease: true
