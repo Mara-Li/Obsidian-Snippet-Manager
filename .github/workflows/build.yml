@@ -66,13 +66,15 @@ jobs:
         uses: actions/download-artifact@v2
         id: download
       - name: Display structure of downloaded files
-        run: ls -R
+        run: |
+          pwd
+          ls
         working-directory: ${{steps.download.outputs.download-path}}
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ${{steps.download.outputs.download-path}}/build-*.zip
-          tag_name: ${{ github.ref }}
-          name: "Release ${{ github.ref }}"
-          prerelease: true
-          generate_release_notes: true
+    #- name: Release
+    #  uses: softprops/action-gh-release@v1
+    #  with:
+    #     files: ${{steps.download.outputs.download-path}}/*.zip
+    #     tag_name: ${{ github.ref }}
+    #     name: "Release ${{ github.ref }}"
+    #     prerelease: true
+    #     generate_release_notes: true
