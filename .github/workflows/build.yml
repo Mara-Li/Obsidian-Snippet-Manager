@@ -65,14 +65,14 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
-      - name: Display structure of downloaded files
+      - name: Zip artifact download 
         run: |
           sudo apt install zip
-          ls Manager-windows-latest/
+          zip -r macOS.zip Manager-macos-latest
+          zip -r windows.zip Manager-windows-latest
+          zip -r ubuntu.zip Manager-ubuntu-latest
+          ls 
           file *
-          zip macOS.zip Manager-macos-latest
-          zip windows.zip Manager-windows-latest
-          zip ubuntu.zip Manager-ubuntu-latest
         working-directory: ${{steps.download.outputs.download-path}}
       - name: Release
         uses: softprops/action-gh-release@v1
