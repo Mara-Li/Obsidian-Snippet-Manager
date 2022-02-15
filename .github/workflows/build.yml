@@ -71,7 +71,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{steps.download.outputs.download-path}}/*/build-*.zip
+          files: ${{steps.download.outputs.download-path}}/build-*.zip
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           prerelease: true
