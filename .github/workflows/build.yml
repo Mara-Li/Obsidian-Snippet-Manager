@@ -65,7 +65,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: artifact/*
+          files: build/*
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           prerelease: true
