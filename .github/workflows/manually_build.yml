@@ -1,0 +1,79 @@
+name: Build
+
+on : workflow_dispatch
+
+defaults:
+  run:
+    shell: bash
+jobs:
+  Build:
+    name: Build release binaries
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.0
+
+      - name: Install Python dependencies Without MacOS
+        if: matrix.os != 'macos-latest'
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          pip install -r requirements.txt
+      - name: Build windows
+        if: matrix.os == 'windows-latest'
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath artifact
+      - name: Build Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath artifact
+      - name: Build MacOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install python-tk@3.9 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+          pip install pyinstaller
+          pip install -r requirements.txt
+          pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath artifact
+
+      - name: Deploy artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: artifact/${{ matrix.os }}-Manager
+          name: Manager-${{ matrix.os }}
+          if-no-files-found: error
+  release:
+    name: Release Build
+    runs-on : ubuntu-latest
+    needs: [Build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        id: download
+      - name: Zip artifact download
+        run: |
+          sudo apt install zip
+          zip -r macOS.zip Manager-macos-latest
+          zip -r windows.zip Manager-windows-latest
+          zip -r ubuntu.zip Manager-ubuntu-latest
+          ls 
+          file *
+        working-directory: ${{steps.download.outputs.download-path}}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+         files: ${{steps.download.outputs.download-path}}/*.zip
+         tag_name: ${{ github.ref }}
+         name: "Release ${{ github.ref }}"
+         generate_release_notes: true
