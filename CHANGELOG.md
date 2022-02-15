@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.3 (2022-02-16)
+### Documentation
+* **build:**  Add more info ([`3f6fae6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3f6fae62a5e9a54783c072e0381182c4075c2582))
+* **readme:** Update GUI info ([`a26c01a`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/a26c01ab2aeea9957c7b836482ea60fa66f05de0))
+
 ## v2.1.2 (2022-02-15)
 ### Fix
 * **build:** Fix building on refs/tags ([`b314fb5`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b314fb51a736004eb908bb317df9b9b75eacfc06))
