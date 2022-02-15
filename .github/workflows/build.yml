@@ -66,17 +66,17 @@ jobs:
         uses: actions/download-artifact@v2
         id: download
       - name: Zip MacOS
-        uses: vimtor/action-zip@1
+        uses: vimtor/action-zip@v1
         with:
           file: ${{steps.download.outputs.download-path}}/build-macos-latest
           dest: build-macos.zip
       - name: Zip Windows
-        uses : vimtor/action-zip@1
+        uses : vimtor/action-zip@v1
         with:
           file: ${{steps.download.outputs.download-path}}/build-windows-latest
           dest: build-windows.zip
       - name: Zip ubuntu
-        uses : vimtor/action-zip@1
+        uses : vimtor/action-zip@v1
         with:
           file: ${{steps.download.outputs.download-path}}/build-ubuntu-latest
           dest: build-ubuntu.zip
