@@ -56,11 +56,11 @@ jobs:
           path: app/${{ matrix.os }}-Manager
           if-no-files-found: error
 
-    - name: Create release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: app/${{ matrix.os }}-Manager
-        asset_name: Obsidian_Snippet_Manager
-        tag: ${{ github.ref }}
-        body: "Release ${{ github.ref }}"
+      - name: Create release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: app/${{ matrix.os }}-Manager
+          asset_name: Obsidian_Snippet_Manager
+          tag: ${{ github.ref }}
+          body: "Release ${{ github.ref }}"
