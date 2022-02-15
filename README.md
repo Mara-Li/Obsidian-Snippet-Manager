@@ -12,11 +12,9 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 ![](screenshot/GUI_snippeter.gif)
 
 You can use the application with an interface, using (in terminal): `snipetter`.
-To get a `.app` or `.exe` you can :
-- Wait to my success to create a build using GitHub Actions (you can help)
-- Use `pyinstaller` on this repo, with `pip install pyinstaller && pyinstaller Obsidian_Snippeter/GUI.py --name "Snippeter" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app`
 
-
+Alternatively, you can download and unzip the latest release for your OS. But, beware : the exe prevent you to get the cli command, so you **can't** use the autoupdate from obsidian-shell.
+Also, the release executable will don't save the environment file at the same place of the package, so you need to save it before update it !
 
 # CLI
 ## Environment
