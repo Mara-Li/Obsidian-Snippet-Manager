@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.5 (2022-02-15)
+### Fix
+* Fix unresolved import ([`01a481b`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/01a481b8961d13972fb52be00d5649c4ee103501))
+
+### Documentation
+* **readme:** Add info GUI ([`a6bd732`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/a6bd732a84d9c99a0febd978b1ee769524789062))
+* **gui:** Add info about gui ([`f91f2dc`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/f91f2dc82a86a68201cd331e53ff075a8fe2d145))
+
 ## v2.0.4 (2022-02-14)
 ### Feature
 * Refactoring ([`17f1d65`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/17f1d65378f6a18ecfc85c2d35e86928ec7dbbab))
