@@ -76,11 +76,11 @@ jobs:
           zip ubuntu.zip build-ubuntu-latest.zip
           file *
         working-directory: ${{steps.download.outputs.download-path}}
-    #- name: Release
-    #  uses: softprops/action-gh-release@v1
-    #  with:
-    #     files: ${{steps.download.outputs.download-path}}/*.zip
-    #     tag_name: ${{ github.ref }}
-    #     name: "Release ${{ github.ref }}"
-    #     prerelease: true
-    #     generate_release_notes: true
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+         files: ${{steps.download.outputs.download-path}}/*.zip
+         tag_name: ${{ github.ref }}
+         name: "Release ${{ github.ref }}"
+         prerelease: true
+         generate_release_notes: true
