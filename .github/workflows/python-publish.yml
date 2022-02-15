@@ -2,8 +2,8 @@ name: Semantic Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - v.*
 
 jobs:
   release:

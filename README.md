@@ -6,7 +6,7 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 ## Requirements
 1. [Git](https://git-scm.com/downloads)
 2. [Python](https://www.python.org/downloads/)
-3. `pip install Obsidian-Snippet-Manager`
+3. `pip install Obsidian-Snippet-Manager --upgrade`
 
 # GUI
 ![](screenshot/GUI_snippeter.gif)
