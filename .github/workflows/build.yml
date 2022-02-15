@@ -67,6 +67,8 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           sudo apt install zip
+          ls
+          file *
           zip macOS.zip build-macos-latest
           zip windows.zip build-windows-latest
           zip ubuntu.zip build-ubuntu-latest
