@@ -176,6 +176,8 @@ def main():
                     title="🎉🎉🎉🎉🎉",
                     message=f"{repo_name} successfully added to Obsidian !",
                 )
+                reload(tree)
+                reload(exclude_tree)
                 if clone_exclude.instate(["selected"]):
                     gt.exclude_folder(repo_path)
             else:
@@ -240,6 +242,7 @@ def main():
         return info
 
     def update_selected():
+        BASEDIR, VAULT = get_environment()
         data = tree.selection()
         exclude_file = os.path.join(BASEDIR, "exclude.yml")
         if os.path.isfile(exclude_file):
