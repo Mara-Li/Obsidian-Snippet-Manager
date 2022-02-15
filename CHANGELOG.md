@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2022-02-15)
+### Fix
+* **ci:** Start on tags ([`e58b6dd`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/e58b6dd83e380cc5004bbe5dab59baac70e85f22))
+
 ## v2.1.0 (2022-02-15)
 ### Fix
 * **gui:** Fix selecting when no files are found ([`6d85729`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/6d8572924a78ccb9154fd4cb8c6a9855432a92a4))
