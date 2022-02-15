@@ -11,7 +11,7 @@ defaults:
 jobs:
   Build:
     name: Build release binaries
-
+    if : startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: false
       matrix:
