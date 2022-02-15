@@ -133,3 +133,4 @@ dmypy.json
 test.py
 app/windows-latest*
 app/Windows/*
+app/*

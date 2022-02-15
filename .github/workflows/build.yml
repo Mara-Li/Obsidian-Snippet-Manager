@@ -37,30 +37,36 @@ jobs:
           pip install -r requirements.txt
       - name: Build windows
         if: matrix.os == 'windows-latest'
-        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath app
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath artifact
       - name: Build Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
+        run: pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath artifact
       - name: Build MacOS
         if: matrix.os == 'macos-latest'
         run: |
           brew install python-tk@3.9 && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc && echo -n 'export PATH="/usr/local/opt/python/libexec/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
           pip install pyinstaller
           pip install -r requirements.txt
-          pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath app
-          
+          pyinstaller Obsidian_Snippeter/GUI.py --name "${{matrix.os}}-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*:Obsidian_Snippeter/src/gui_bin/' --distpath artifact
+
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: app-${{ matrix.os }}
-          path: app/${{ matrix.os }}-Manager
+          name: build-${{ matrix.os }}
+          path: artifact/${{ matrix.os }}-Manager
           if-no-files-found: error
-
-      - name: Create release
-        uses: svenstaro/upload-release-action@v2
+  release:
+    name: Release Build
+    runs-on : ubuntu-latest
+    needs: [Build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: app/app-${{ matrix.os }}
-          asset_name: Obsidian_Snippet_Manager
-          tag: ${{ github.ref }}
-          body: "Release ${{ github.ref }}"
+          files: artifact/*
+        env :
+          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
