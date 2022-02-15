@@ -32,26 +32,26 @@ def create_env():
     vault = ""
     folder_snippet = ""
     while (
-            vault == ""
-            or not os.path.isdir(vault)
-            or not os.path.isdir(os.path.join(vault, ".obsidian"))
+        vault == ""
+        or not os.path.isdir(vault)
+        or not os.path.isdir(os.path.join(vault, ".obsidian"))
     ):
         vault = str(
             console.input(
                 "Please provide your [u bold]obsidian vault[/] absolute path: "
-                )
             )
+        )
     while folder_snippet == "":
         folder_snippet = str(
             console.input(
                 "Please provide the [u bold]Snippet Manager Folder[/] absolute path: "
-                )
             )
+        )
         if not os.path.isdir(Path(folder_snippet)):
             Path(folder_snippet).mkdir(exist_ok=True)
             console.print(
                 f"[u bold]Snippet Manager Folder[/] created in [u]{folder_snippet}[/]."
-                )
+            )
         excluded = os.path.join(folder_snippet, "exclude.yml")
         if not os.path.isfile(Path(excluded)):
             f = open(excluded, "w", encoding="utf-8")
@@ -63,6 +63,10 @@ def create_env():
 
 
 def check_environnement():
+    """
+    Get environment variable from files
+    :return: BASEDIR: Path / VAULT: Path
+    """
     BASEDIR, VAULT = environment.get_environments()
     if len(str(BASEDIR)) == 0 or len(str(VAULT)) == 0:
         create_env()
@@ -70,6 +74,12 @@ def check_environnement():
 
 
 def clone_message(repo_url, BASEDIR):
+    """
+    Rich python the info from clone return
+    :param repo_url: Repository github url
+    :param BASEDIR: Folder Snippet folder
+    :return:
+    """
     working_dir, message = github_action.git_clone(repo_url)
     repo_name = urlparse(repo_url).path[1:].split("/")[1]
     if message:
@@ -83,6 +93,11 @@ def clone_message(repo_url, BASEDIR):
 
 
 def pull_message(repo_path):
+    """
+    Print message from github action return
+    :param repo_path: Path to newly cloned repo
+    :return:
+    """
     exc = github_action.git_pull(repo_path)
     if exc != "0":
         print(f":warning: [red] Git returns an error :[/] {exc}")
@@ -103,7 +118,7 @@ def main():
                 action
                 for action in parser._actions
                 if isinstance(action, argparse._SubParsersAction)
-                ]
+            ]
             # there will probably only be one subparser_action,
             # but better save than sorry
             for subparsers_action in subparsers_actions:
@@ -118,47 +133,47 @@ def main():
     parser = argparse.ArgumentParser(
         description="Git pull and copy the css files in .obsidian/snippet",
         add_help=False,
-        )
+    )
     parser.add_argument(
         "--help", action=_HelpAction, help="show this help message and exit"
-        )
+    )
     subparser = parser.add_subparsers(dest="cmd")
     parser_clone = subparser.add_parser(
         "clone", help="Clone a repository and add the snippet to Obsidian"
-        )
+    )
     parser_clone.add_argument(
         "repository",
         help="Clone a new repository",
         action="store",
-        )
+    )
     parser_clone.add_argument(
         "--excluded",
         "--e",
         "--no",
         help="Exclude this repository from update",
         action="store_true",
-        )
+    )
     parser_update = subparser.add_parser(
         "update", help="Update a specific CSS snippet."
-        )
+    )
     parser_update.add_argument(
         "repository_name",
         help="The repo you want to update",
         action="store",
-        )
+    )
     parser_config = subparser.add_parser(
         "configuration", help="Edit the configuration file"
-        )
+    )
 
     parser_list = subparser.add_parser(
         "list", help="List all Github Repository you cloned."
-        )
+    )
     parser_exclude = subparser.add_parser(
         "exclude", help="Exclude repository from update"
-        )
+    )
     parser_exclude.add_argument(
         "exclude", help="Exclude repository from the update", action="store", nargs="+"
-        )
+    )
     args = parser.parse_args()
     if args.cmd == "config":
         create_env()
@@ -182,7 +197,7 @@ def main():
             if len(css_file) > 0:
                 console.print(
                     f"🎉 [u]{args.repository}[/] successfull added to Obsidian."
-                    )
+                )
                 if args.excluded:
                     github_action.exclude_folder(repo_path)
             else:
@@ -190,10 +205,10 @@ def main():
     elif args.cmd == "update":
         all_folder = [
             x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
-            ]
+        ]
         repo_name = [
             x for x in all_folder if os.path.basename(x) == args.repository_name
-            ]
+        ]
         if len(repo_name) > 0:
             repo_path = Path(repo_name[0])
             pull_message(repo_path)
@@ -203,18 +218,18 @@ def main():
             else:
                 console.print(
                     f"🤨 There is no CSS file in [u]{args.repository_name}[/]."
-                    )
+                )
         else:
             console.print(
                 "[u]This repository doesn't exists[/]. Did you use the correct folder"
                 " name ?"
-                )
+            )
     elif args.cmd == "list":
         all_folder = [
             os.path.basename(x)
             for x in glob(os.path.join(str(BASEDIR), "**"))
             if os.path.isdir(x)
-            ]
+        ]
         if len(all_folder) > 1:
             folder_msg = "\n- ".join(all_folder)
             folder_msg = f"[u] The repository present are :[/]\n- {folder_msg}"
@@ -227,12 +242,12 @@ def main():
     else:
         all_folder = [
             x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
-            ]
+        ]
         info = []
         for i in all_folder:
             if (
-                    os.path.isdir(os.path.join(i, ".git"))
-                    and not os.path.basename(i) in exclude
+                os.path.isdir(os.path.join(i, ".git"))
+                and not os.path.basename(i) in exclude
             ):
                 pull_message(i)
                 css_file = github_action.move_to_obsidian(i)
