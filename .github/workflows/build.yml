@@ -72,7 +72,7 @@ jobs:
           zip macOS.zip build-macos-latest
           zip windows.zip build-windows-latest
           zip ubuntu.zip build-ubuntu-latest
-        working-directory: ${{steps.download.outputs.download-path}}
+        working-directory: ${{steps.download.outputs.download-path}}/artifact
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
