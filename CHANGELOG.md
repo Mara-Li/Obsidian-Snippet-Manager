@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2022-02-16)
+### Fix
+* **build:** Revert builds ([`f42a05c`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/f42a05c7c3f2c079cd697461f15ff8a6279e451f))
+* **build:** Fix building on refs/tags ([`b314fb5`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b314fb51a736004eb908bb317df9b9b75eacfc06))
+* **ci:** Start on tags ([`e58b6dd`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/e58b6dd83e380cc5004bbe5dab59baac70e85f22))
+
+### Documentation
+* **build:**  Add more info ([`3f6fae6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3f6fae62a5e9a54783c072e0381182c4075c2582))
+* **readme:** Update GUI info ([`a26c01a`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/a26c01ab2aeea9957c7b836482ea60fa66f05de0))
+
 ## v2.1.0 (2022-02-15)
 ### Fix
 * **gui:** Fix selecting when no files are found ([`6d85729`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/6d8572924a78ccb9154fd4cb8c6a9855432a92a4))
