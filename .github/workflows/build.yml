@@ -52,7 +52,6 @@ jobs:
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ matrix.os }}.zip
           path: artifact/${{ matrix.os }}-Manager
           if-no-files-found: error
   release:
@@ -67,14 +66,10 @@ jobs:
         id: download
       - name: Display structure of downloaded files
         run: |
-          pwd
-          ls
-          file *
           sudo apt install zip
-          zip macOS.zip build-macos-latest.zip
-          zip windows.zip build-windows-latest.zip
-          zip ubuntu.zip build-ubuntu-latest.zip
-          file *
+          zip macOS.zip build-macos-latest
+          zip windows.zip build-windows-latest
+          zip ubuntu.zip build-ubuntu-latest
         working-directory: ${{steps.download.outputs.download-path}}
       - name: Release
         uses: softprops/action-gh-release@v1
