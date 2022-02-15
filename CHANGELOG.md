@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.6 (2022-02-15)
+### Fix
+* **build:** Use upload release action instead ([`9c3735c`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/9c3735ca57174538875112a9d33104c41b9c232b))
+
 ## v2.0.5 (2022-02-15)
 ### Fix
 * Fix unresolved import ([`01a481b`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/01a481b8961d13972fb52be00d5649c4ee103501))
