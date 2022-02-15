@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.2 (2022-02-15)
+### Fix
+* **build:** Fix building on refs/tags ([`b314fb5`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b314fb51a736004eb908bb317df9b9b75eacfc06))
+
 ## v2.1.1 (2022-02-15)
 ### Fix
 * **ci:** Start on tags ([`e58b6dd`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/e58b6dd83e380cc5004bbe5dab59baac70e85f22))
