@@ -2,8 +2,8 @@ name: Build
 
 on:
   push:
-    branches:
-      - main
+    tags:
+       - 'v*'
 
 defaults:
   run:
@@ -52,8 +52,8 @@ jobs:
       - name: Deploy artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ matrix.os }}.zip
           path: artifact/${{ matrix.os }}-Manager
+          name: Manager-${{ matrix.os }}
           if-no-files-found: error
   release:
     name: Release Build
@@ -65,16 +65,19 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
-      - name: Display structure of downloaded files
+      - name: Zip artifact download 
         run: |
-          pwd
-          ls
+          sudo apt install zip
+          zip -r macOS.zip Manager-macos-latest
+          zip -r windows.zip Manager-windows-latest
+          zip -r ubuntu.zip Manager-ubuntu-latest
+          ls 
+          file *
         working-directory: ${{steps.download.outputs.download-path}}
-    #- name: Release
-    #  uses: softprops/action-gh-release@v1
-    #  with:
-    #     files: ${{steps.download.outputs.download-path}}/*.zip
-    #     tag_name: ${{ github.ref }}
-    #     name: "Release ${{ github.ref }}"
-    #     prerelease: true
-    #     generate_release_notes: true
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+         files: ${{steps.download.outputs.download-path}}/*.zip
+         tag_name: ${{ github.ref }}
+         name: "Release ${{ github.ref }}"
+         generate_release_notes: true
