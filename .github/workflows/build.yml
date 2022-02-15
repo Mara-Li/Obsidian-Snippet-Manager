@@ -69,6 +69,7 @@ jobs:
         run: |
           pwd
           ls
+          file *
         working-directory: ${{steps.download.outputs.download-path}}
     #- name: Release
     #  uses: softprops/action-gh-release@v1
