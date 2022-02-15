@@ -55,25 +55,12 @@ jobs:
           name: app-${{ matrix.os }}
           path: app/${{ matrix.os }}-Manager
           if-no-files-found: error
-      - name: create release
-        uses: actions/create-release@v1
-        id: create_release
-        with:
-          draft: false
-          prerelease: false
-          release_name: ${{ steps.version.outputs.version }}
-          tag_name: ${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: upload artifacts
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          url: ${{ steps.create_release.outputs.upload_url }}
-          files: | 
-            app/macos-latest-Manager
-            app/windows-latest-Manager
-            app/ubuntu-latest-Manager
-          name: Obsidian_Snippet_Manager
-          generate_release_notes: true
+
+    - name: Create release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: app/${{ matrix.os }}-Manager
+        asset_name: Obsidian_Snippet_Manager
+        tag: ${{ github.ref }}
+        body: "Release ${{ github.ref }}"
