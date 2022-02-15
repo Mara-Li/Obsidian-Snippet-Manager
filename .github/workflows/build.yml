@@ -68,7 +68,7 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           sudo apt install zip
-          ls
+          ls Manager-windows-latest/
           file *
           zip macOS.zip Manager-macos-latest
           zip windows.zip Manager-windows-latest
