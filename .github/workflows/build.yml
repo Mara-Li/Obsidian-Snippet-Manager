@@ -61,16 +61,16 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: ${{ steps.version.outputs.version }}-release
-          tag_name: ${{ github.ref }}-release
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: upload windows artifact
+      - name: upload artifacts
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           assets_path: app/${{ matrix.os }}-Manager
-          assets_name: Obsidian_Snippet_Manager-Windows.zip
+          assets_name: Obsidian_Snippet_Manager.zip
           assets_content_type: application/zip

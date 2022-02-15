@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 import git
 from git import Repo, exc
-from obs_manager.src import environment
+from Obsidian_Snippeter.src import environment
 
 
 def git_clone(repo_url):
