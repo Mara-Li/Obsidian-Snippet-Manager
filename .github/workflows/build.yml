@@ -70,6 +70,11 @@ jobs:
           pwd
           ls
           file *
+          sudo apt install zip
+          zip macOS.zip build-macos-latest.zip
+          zip windows.zip build-windows-latest.zip
+          zip ubuntu.zip build-ubuntu-latest.zip
+          file *
         working-directory: ${{steps.download.outputs.download-path}}
     #- name: Release
     #  uses: softprops/action-gh-release@v1
