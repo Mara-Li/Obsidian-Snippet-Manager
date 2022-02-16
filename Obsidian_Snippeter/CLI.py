@@ -17,6 +17,16 @@ import Obsidian_Snippeter as manager
 from Obsidian_Snippeter.src import environment
 from Obsidian_Snippeter.src import github_action
 
+def read_exclude(BASEDIR):
+    exclude_file = os.path.join(BASEDIR, "exclude.yml")
+    exclude=[]
+    if os.path.isfile(exclude_file):
+        with open(exclude_file, "r", encoding="utf-8") as f:
+            exclude = yaml.safe_load(f)
+    else:
+        f = open(exclude_file, "w", encoding="utf-8")
+        f.close()
+    return exclude
 
 def create_env():
     """
@@ -68,7 +78,7 @@ def check_environnement():
     :return: BASEDIR: Path / VAULT: Path
     """
     BASEDIR, VAULT = environment.get_environments()
-    if len(str(BASEDIR)) == 0 or len(str(VAULT)) == 0:
+    if len(str(BASEDIR)) == 0 or len(str(VAULT)) == 0 or not os.path.isdir(BASEDIR) or not os.path.isdir(VAULT):
         create_env()
     return BASEDIR, VAULT
 
@@ -180,16 +190,9 @@ def main():
         sys.exit()
     global_value = check_environnement()
     BASEDIR = global_value[0]
-    exclude_file = os.path.join(BASEDIR, "exclude.yml")
     exclude = []
-    if os.path.isfile(exclude_file):
-        with open(exclude_file, "r", encoding="utf-8") as f:
-            exclude = yaml.safe_load(f)
-    else:
-        f = open(exclude_file, "w", encoding="utf-8")
-        f.close()
     if args.cmd == "exclude":
-        exclude = args.exclude + exclude
+        exclude = args.exclude + read_exclude(BASEDIR)
     if args.cmd == "clone":
         repo_path = clone_message(args.repository, BASEDIR)
         if repo_path != "0" and repo_path != "Already exists":
