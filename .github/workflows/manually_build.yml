@@ -64,9 +64,16 @@ jobs:
       - name: Zip artifact downloaded
         run: |
           sudo apt install zip
-          zip -r macOS.zip Manager-macos-latest/*
-          zip -r windows.zip Manager-windows-latest/*
-          zip -r ubuntu.zip Manager-ubuntu-latest/*
+          cd Manager-macos-latest
+          zip -r macOS.zip *
+          mv macOS.zip ..
+          cd ../Manager-windows-latest
+          zip -r windows.zip *
+          mv windows.zip ..
+          cd ../Manager-ubuntu-latest
+          zip -r ubuntu.zip *
+          mv ubuntu.zip ..
+          cd ..
           ls 
           file *
         working-directory: ${{steps.download.outputs.download-path}}
