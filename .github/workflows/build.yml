@@ -84,5 +84,4 @@ jobs:
         with:
          files: ${{steps.download.outputs.download-path}}/*.zip
          tag_name: ${{ github.ref }}
-         name: "Release ${{ github.ref }}"
          generate_release_notes: true
