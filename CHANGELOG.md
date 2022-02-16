@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.7 (2022-02-16)
+### Fix
+* **cli:** Fix environment error ([`4653f39`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4653f3940abd2b0eee487f8771ff2f930d2b7e40))
+
 ## v2.1.6 (2022-02-16)
 ### Feature
 * Refactoring ([`17f1d65`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/17f1d65378f6a18ecfc85c2d35e86928ec7dbbab))
