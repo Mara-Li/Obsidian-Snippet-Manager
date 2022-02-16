@@ -61,12 +61,12 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         id: download
-      - name: Zip artifact download
+      - name: Zip artifact downloaded
         run: |
           sudo apt install zip
-          zip -r macOS.zip Manager-macos-latest
-          zip -r windows.zip Manager-windows-latest
-          zip -r ubuntu.zip Manager-ubuntu-latest
+          zip -r macOS.zip Manager-macos-latest/*
+          zip -r windows.zip Manager-windows-latest/*
+          zip -r ubuntu.zip Manager-ubuntu-latest/*
           ls 
           file *
         working-directory: ${{steps.download.outputs.download-path}}
