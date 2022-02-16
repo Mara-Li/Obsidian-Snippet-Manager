@@ -14,7 +14,7 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 You can use the application with an interface, using (in terminal): `snipetter`.
 
 Information about [executable release](https://github.com/Mara-Li/Obsidian-Snippet-Manager/releases):
-- It will don't install the CLI command, so you won't have the [Obsidian-Shell auto-update](readme#in-obsidian).
+- It will don't install the CLI command, so you won't have the [Obsidian-Shell auto-update](README.md#in-obsidian).
 - The executable don't use the same environment file as the package : You need to configure two times if you use the two (CLI + executable released)
 - Delete the release delete the environment file. Beware when you update your executable.
 
