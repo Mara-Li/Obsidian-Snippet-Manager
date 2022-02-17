@@ -17,9 +17,10 @@ import Obsidian_Snippeter as manager
 from Obsidian_Snippeter.src import environment
 from Obsidian_Snippeter.src import github_action
 
+
 def read_exclude(BASEDIR):
     exclude_file = os.path.join(BASEDIR, "exclude.yml")
-    exclude=[]
+    exclude = []
     if os.path.isfile(exclude_file):
         with open(exclude_file, "r", encoding="utf-8") as f:
             exclude = yaml.safe_load(f)
@@ -27,6 +28,7 @@ def read_exclude(BASEDIR):
         f = open(exclude_file, "w", encoding="utf-8")
         f.close()
     return exclude
+
 
 def create_env():
     """
@@ -78,7 +80,12 @@ def check_environnement():
     :return: BASEDIR: Path / VAULT: Path
     """
     BASEDIR, VAULT = environment.get_environments()
-    if len(str(BASEDIR)) == 0 or len(str(VAULT)) == 0 or not os.path.isdir(BASEDIR) or not os.path.isdir(VAULT):
+    if (
+        len(str(BASEDIR)) == 0
+        or len(str(VAULT)) == 0
+        or not os.path.isdir(BASEDIR)
+        or not os.path.isdir(VAULT)
+    ):
         create_env()
     return BASEDIR, VAULT
 
@@ -162,7 +169,7 @@ def main():
         "--no",
         help="Exclude this repository from update",
         action="store",
-        nargs='*'
+        nargs="*",
     )
 
     parser_update = subparser.add_parser(
@@ -174,7 +181,7 @@ def main():
         "--s",
         help="Use only selectionned file",
         action="store",
-        nargs='+'
+        nargs="+",
     )
     parser_update.add_argument(
         "repository_name",
@@ -209,10 +216,10 @@ def main():
             if args.excluded is not None:
                 if len(args.excluded) > 0:
                     for i in args.excluded:
-                        if i.endswith('.css'):
+                        if i.endswith(".css"):
                             github_action.exclude_folder(i)
                         else:
-                            file = i + '.css'
+                            file = i + ".css"
                             github_action.exclude_folder(file)
             css_file = github_action.move_to_obsidian(repo_path)
             if len(css_file) > 0:
@@ -228,26 +235,29 @@ def main():
             x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
         ]
         repo_name = [
-            x for x in all_folder if os.path.basename(x) == args.repository_name
+            x for x in all_folder if os.path.basename(x) in args.repository_name
         ]
         if len(repo_name) > 0:
-            repo_path = Path(repo_name[0])
-            pull_message(repo_path)
-            css_file = []
-            if args.only:
-                for i in args.only:
-                    file = os.path.join(repo_path, i)
-                    if not ".css" in i:
-                        file = i + ".css"
-                    css_file.append(github_action.move_to_obsidian(file))
-            else:
-                css_file = github_action.move_to_obsidian(repo_path)
-            if len(css_file) > 0:
-                console.print(f"🎉 [u]{args.repository_name}[/] successfully updated.")
-            else:
-                console.print(
-                    f"🤨 There is no CSS file in [u]{args.repository_name}[/]."
-                )
+            for i in repo_name:
+                repo_path = Path(i)
+                pull_message(repo_path)
+                css_file = []
+                if args.only:
+                    for j in args.only:
+                        file = os.path.join(repo_path, j)
+                        if not ".css" in j:
+                            file = j + ".css"
+                        css_file.append(github_action.move_to_obsidian(file))
+                else:
+                    css_file = github_action.move_to_obsidian(repo_path)
+                if len(css_file) > 0:
+                    console.print(
+                        f"🎉 [u]{args.repository_name}[/] successfully updated."
+                    )
+                else:
+                    console.print(
+                        f"🤨 There is no CSS file in [u]{args.repository_name}[/]."
+                    )
         else:
             console.print(
                 "[u]This repository doesn't exists[/]. Did you use the correct folder"

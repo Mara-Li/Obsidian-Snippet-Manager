@@ -57,7 +57,7 @@ def move_to_obsidian(repo_path):
     """
     global_value = environment.get_environments()
     VAULT = global_value[1]
-    BASEDIR=global_value[0]
+    BASEDIR = global_value[0]
     snippets = os.path.join(VAULT, ".obsidian", "snippets")
     exclude_file = os.path.join(BASEDIR, "exclude.yml")
     exclude = []
@@ -66,14 +66,15 @@ def move_to_obsidian(repo_path):
             exclude = yaml.safe_load(f)
     Path(snippets).mkdir(exist_ok=True)  # Create snippets folder if not exists
     # Get all css files
-    css_files=[]
+    css_files = []
     if not os.path.isfile(repo_path):
         css_files = [
             x
-            for x in glob(os.path.join(str(repo_path), "**"), recursive=True) if x not in exclude and x.endswith('css')
-            ]
+            for x in glob(os.path.join(str(repo_path), "**"), recursive=True)
+            if x not in exclude and x.endswith("css")
+        ]
     elif os.path.isfile(repo_path):
-        css_files=[repo_path]
+        css_files = [repo_path]
     if len(css_files) > 0:
         for i in css_files:
             shutil.copy(i, snippets)
@@ -90,12 +91,11 @@ def exclude_folder(repo_path):
     BASEDIR = global_value[0]
     excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
-    with open(excluded, 'r', encoding='utf-8') as f:
+    with open(excluded, "r", encoding="utf-8") as f:
         excluded_files = yaml.safe_load(f)
     if not excluded_files:
-        excluded_files=[]
+        excluded_files = []
     if repo_name not in excluded_files and repo_name != "":
         excluded_files.append(repo_name)
-    with open(excluded, 'w', encoding='utf-8') as f:
+    with open(excluded, "w", encoding="utf-8") as f:
         yaml.dump(excluded_files, f)
-
