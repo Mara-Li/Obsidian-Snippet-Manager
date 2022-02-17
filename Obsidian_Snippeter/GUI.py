@@ -3,7 +3,7 @@ Create a GUI to allow an easy control for any user :D
 """
 import os.path
 import tkinter as tk
-from glob import glob
+from glob import glob,iglob
 from pathlib import Path
 from tkinter import ttk, filedialog
 from tkinter.messagebox import showerror, showinfo
@@ -53,8 +53,6 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
             command=lambda: select_snippet(folder_path,folder_name, file_tree, tree, exclude_tree, clone_exclude)
         )
         exclude_button.grid(row=2, column=0, sticky='ew')
-
-
 
 def git_pull(repo_path):
     """
@@ -190,10 +188,7 @@ def reload(tree):
     BASEDIR, VAULT = get_environment()
     tree.delete(*tree.get_children())
     all_repo = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
-    for i, name in enumerate(all_repo):
-        tupled = (str(name),)
-        repo_name = os.path.basename(name)
-        tree.insert("", i, text=repo_name, values=tupled)
+    traverse_dir(BASEDIR, tree)
     if len(all_repo) > 0:
         selection_all(tree)
     tree.heading("#0", text="Unselect all Snippets")
@@ -272,11 +267,15 @@ def update_selected(tree):
         if len(tree.item(i)["values"]) > 0:
             repo_path = tree.item(i)["values"][0]
             repo_name = tree.item(i)["text"]
+            if repo_path.endswith('.css'): #isfile
+                parent = str(Path(repo_path).parent)
+            else:
+                parent = str(repo_path)
             if (
-                os.path.isdir(os.path.join(repo_path, ".git"))
+                os.path.isdir(os.path.join(parent, ".git"))
                 and not repo_name in exclude
             ):
-                git_pull(repo_path)
+                git_pull(parent)
                 css_file = gt.move_to_obsidian(repo_path)
                 if len(css_file) > 0:
                     info.append(f"{repo_name}")
@@ -414,6 +413,23 @@ def clone_menu(clone, tree, exclude_tree):
     )
     clone_download.grid(row=2, column=1, ipadx=120)
 
+def check_folder_contents(folder):
+    if os.path.isdir(folder):
+        if not any(os.scandir(folder)):
+            return False
+        elif not any(iglob(os.path.join(folder, '*.css'))):
+            return False
+    return True
+
+def traverse_dir(path, tree, parent=''):
+    for file in os.listdir(path):
+        fullpath=os.path.join(path, file)
+        if not '.git' in fullpath:
+            if check_folder_contents(fullpath):
+                if fullpath.endswith('css') or os.path.isdir(fullpath):
+                    node_id=tree.insert(parent, 'end', text=os.path.basename(fullpath).replace('.css', ''), value=(str(fullpath),), open=False)
+                    if os.path.isdir(fullpath):
+                        traverse_dir(fullpath, tree, node_id)
 
 def update_menu(update):
     """
@@ -433,12 +449,8 @@ def update_menu(update):
         anchor=tk.CENTER,
         command=lambda: switch(tree),
     )
-    tree.insert("", "end", "Snippets")
     all_repo = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
-    for i, name in enumerate(all_repo):
-        tupled = (str(name),)
-        repo_name = os.path.basename(name)
-        tree.insert("", i, text=repo_name, values=tupled)
+    traverse_dir(BASEDIR,tree)
     tree.grid(column=0, row=2, sticky="ew")
     if len(all_repo) > 0:
         tree.selection_set(tree.get_children())
