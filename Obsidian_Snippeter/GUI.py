@@ -482,11 +482,7 @@ def exclude_menu(delete):
         anchor=tk.CENTER,
         command=lambda: switch(exclude_tree),
     )
-    exclude_tree.insert("", "end", "Snippets")
-    for i, name in enumerate(all_repo):
-        tupled = (str(name),)
-        repo_name = os.path.basename(name)
-        exclude_tree.insert("", i, text=repo_name, values=tupled)
+    traverse_dir(BASEDIR, exclude_tree)
     exclude_tree.grid(column=0, row=2, sticky="ew")
     if len(all_repo) > 0:
         exclude_tree.selection_set(exclude_tree.get_children())
