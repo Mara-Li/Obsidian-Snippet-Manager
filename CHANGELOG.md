@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v2.2.0 (2022-02-17)
+### Feature
+* **cli:** Update only snippet from selected repository ([`b2359a2`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b2359a298feae2efe8fde6a4a4467adba456f3e8))
+* **cli:** Exclude css snippet from update ([`ad0a2c0`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/ad0a2c0e8b182917d70bb211e85d836d2dc28f2b))
+* **gui:** Exclude css snippet from update ([`5c9f3eb`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/5c9f3eba0cf16ca1421fb3bc10e34880970b0a25))
+* **GUI:** Select css snippet to "update" ([`175d076`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/175d076d554d63eb172e6aebcd6bf590ae785c2c))
+* **GUI:** Download specific snippet ([`b94e158`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b94e158858db17bfb438312312b47af07746453b))
+
+### Documentation
+* **readme:** Add info about snippet only excluding/update ([`1e9ffde`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/1e9ffde4cea8a5c9a6a6b7c5d68c2ae6f0c933ce))
+* **readme:** Typo ([`9079ea0`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/9079ea037bd8000e5ef6ec96da18327ff6a1c29c))
+* **readme:** More info about executable release ([`4d2fd82`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4d2fd8254abe4c093621338d233032bdd231ef45))
+
 ## v2.1.7 (2022-02-16)
 ### Fix
 * **cli:** Fix environment error ([`4653f39`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/4653f3940abd2b0eee487f8771ff2f930d2b7e40))
