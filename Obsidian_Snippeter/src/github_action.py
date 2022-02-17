@@ -1,6 +1,8 @@
 """
 Provide all git actions the script needs
 """
+import yaml
+import validators
 import os.path
 import shutil
 from glob import glob
@@ -19,13 +21,16 @@ def git_clone(repo_url):
     """
     global_value = environment.get_environments()
     BASEDIR = global_value[0]
-    folder_name = urlparse(repo_url).path[1:].split("/")[1]
-    if os.path.isdir(os.path.join(BASEDIR, str(folder_name))):
-        return "Already exists", False
-    try:
-        repo = Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
-        return repo.working_dir, True
-    except exc.GitCommandError:
+    if len(repo_url) > 0 and validators.url(repo_url):
+        folder_name = urlparse(repo_url).path[1:].split("/")[1]
+        if os.path.isdir(os.path.join(BASEDIR, str(folder_name))):
+            return "Already exists", False
+        try:
+            repo = Repo.clone_from(repo_url, os.path.join(BASEDIR, str(folder_name)))
+            return repo.working_dir, True
+        except exc.GitCommandError:
+            return "0", False
+    else:
         return "0", False
 
 
@@ -52,14 +57,23 @@ def move_to_obsidian(repo_path):
     """
     global_value = environment.get_environments()
     VAULT = global_value[1]
+    BASEDIR=global_value[0]
     snippets = os.path.join(VAULT, ".obsidian", "snippets")
+    exclude_file = os.path.join(BASEDIR, "exclude.yml")
+    exclude = []
+    if os.path.isfile(exclude_file):
+        with open(exclude_file, "r", encoding="utf-8") as f:
+            exclude = yaml.safe_load(f)
     Path(snippets).mkdir(exist_ok=True)  # Create snippets folder if not exists
     # Get all css files
-    css_files = [
-        x
-        for x in glob(os.path.join(str(repo_path), "**"), recursive=True)
-        if x.endswith("css")
-    ]
+    css_files=[]
+    if not os.path.isfile(repo_path):
+        css_files = [
+            x
+            for x in glob(os.path.join(str(repo_path), "**"), recursive=True) if x not in exclude and x.endswith('css')
+            ]
+    elif os.path.isfile(repo_path):
+        css_files=[repo_path]
     if len(css_files) > 0:
         for i in css_files:
             shutil.copy(i, snippets)
@@ -76,5 +90,12 @@ def exclude_folder(repo_path):
     BASEDIR = global_value[0]
     excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
-    with open(excluded, "a", encoding="utf-8") as f:
-        f.write(f"- {repo_name}\n")
+    with open(excluded, 'r', encoding='utf-8') as f:
+        excluded_files = yaml.safe_load(f)
+    if not excluded_files:
+        excluded_files=[]
+    if repo_name not in excluded_files and repo_name != "":
+        excluded_files.append(repo_name)
+    with open(excluded, 'w', encoding='utf-8') as f:
+        yaml.dump(excluded_files, f)
+

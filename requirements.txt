@@ -5,3 +5,4 @@ PyYAML~=6.0
 ttkthemes
 Pillow~=9.0.1
 GitPython
+validators

@@ -18,6 +18,43 @@ import Obsidian_Snippeter as manager
 from Obsidian_Snippeter.src import environment as envi
 from Obsidian_Snippeter.src import github_action as gt
 
+def select_snippet(repo_path, repo_name, file_tree, tree, exclude_tree, clone_exclude):
+    not_snippet = [file_tree.item(i)['values'][0] for i in file_tree.selection() if len(file_tree.item(i)['values'])>0]
+    obsidian_to_css(repo_path, repo_name, not_snippet,tree, exclude_tree, clone_exclude)
+
+def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
+    folder_name, folder_path=download(url)
+    if folder_path != "0":
+        pop_list = tk.Toplevel(frame)
+        pop_list.title('Exclude CSS')
+        pop_list.grid_columnconfigure(0, weight=1)
+        pop_list.grid_columnconfigure(1, weight=0)
+        file_tree=ttk.Treeview(pop_list)
+        file_tree.column("#0")
+        file_tree.heading(
+            '#0',
+            text='Select all snippets',
+            anchor=tk.CENTER,
+            command = lambda: switch(file_tree),
+        )
+        file_tree.insert('', 'end', "Snippets")
+        file_repo = [x for x in glob(os.path.join(BASEDIR,str(folder_name), '**'), recursive=True) if x.endswith('css')]
+        for i, name in enumerate(file_repo):
+            tupled=(str(name),)
+            snippet_name=os.path.basename(name)
+            file_tree.insert("", i, text=snippet_name, values=tupled)
+        file_tree.grid(column=0, row=1, sticky='ew')
+
+        if len(file_repo) > 0:
+            file_tree.selection_set(file_tree.get_children())
+        exclude_button=ttk.Button(
+            pop_list,
+            text='Clone snippets',
+            command=lambda: select_snippet(folder_path,folder_name, file_tree, tree, exclude_tree, clone_exclude)
+        )
+        exclude_button.grid(row=2, column=0, sticky='ew')
+
+
 
 def git_pull(repo_path):
     """
@@ -101,36 +138,45 @@ def save_env(vault, folder_snippet):
         snippets = os.path.join(vault, ".obsidian", "snippets")
         Path(snippets).mkdir(exist_ok=True)  # Create snippets folder if not exists
 
-
-def download(url, tree, exclude_tree, clone_exclude):
+def obsidian_to_css(repo_path, repo_name,not_excluded,tree, exclude_tree, clone_exclude):
+    css_file=[]
+    for i in not_excluded:
+        css_file=gt.move_to_obsidian(i)
+    if len(css_file) > 0:
+        css_file = "\n- ".join(css_file)
+        if len(css_file) == 0:
+            css_file = "".join(css_file)
+        showinfo(
+            title="🎉🎉🎉🎉🎉",
+            message=f"{css_file} successfully added to Obsidian !",
+            )
+        reload(tree)
+        reload(exclude_tree)
+        if clone_exclude.instate(["selected"]):
+            gt.exclude_folder(repo_path)
+    else:
+        showerror(title="❌❌❌❌❌❌", message=f"There is no CSS file in {repo_name}.")
+def download(url):
     """
     Clone a repository
     Move CSS to obsidian
     :param url: URL to repo
-    :param tree: Update treeview
-    :param exclude_tree: Exclude treeview
-    :param clone_exclude: Checkbox value
     :return: /
     """
-    repo_path = git_clone(url)
-    repo_name = urlparse(url).path[1:].split("/")[1]
-    if repo_path == "Already exists":
-        showerror(title="❌❌❌❌❌❌", message=f"{repo_name} already exists.")
-    elif repo_path == "0":
-        showerror(title="❌❌❌❌❌❌", message=f"{repo_name} doesn't exists.")
+    if len(url) !=0:
+        repo_path = git_clone(url)
+        repo_name = urlparse(url).path[1:].split("/")[1]
+
+        if repo_path == "Already exists":
+            showerror(title="❌❌❌❌❌❌", message=f"{repo_name} already exists.")
+            return "0","0"
+        elif repo_path == "0":
+            showerror(title="❌❌❌❌❌❌", message=f"{repo_name} doesn't exists.")
+            return "0", "0"
+        return repo_path, repo_name
     else:
-        css_file = gt.move_to_obsidian(repo_path)
-        if len(css_file) > 0:
-            showinfo(
-                title="🎉🎉🎉🎉🎉",
-                message=f"{repo_name} successfully added to Obsidian !",
-            )
-            reload(tree)
-            reload(exclude_tree)
-            if clone_exclude.instate(["selected"]):
-                gt.exclude_folder(repo_path)
-        else:
-            showerror(title="❌❌❌❌❌❌", message=f"There is no CSS file in {repo_name}.")
+        showerror(title="❌❌❌❌❌❌", message="Please, fill the URL before trying to download !")
+        return "0", "0"
 
 
 def reload(tree):
@@ -360,11 +406,11 @@ def clone_menu(clone, tree, exclude_tree):
     )
     clone_exclude_label.grid(row=1, column=1, sticky="w")
     clone_exclude.grid(row=1, column=1, sticky="ne", ipadx=120)
-
+    BASEDIR, VAULT = get_environment()
     clone_download = ttk.Button(
         clone,
         text="Download",
-        command=lambda: download(clone_entry.get(), tree, exclude_tree, clone_exclude),
+        command=lambda: pop_up_exclude(clone, BASEDIR, clone_entry.get(), tree, exclude_tree, clone_exclude),
     )
     clone_download.grid(row=2, column=1, ipadx=120)
 
@@ -440,6 +486,7 @@ def exclude_menu(delete):
     refresh_exclude = ttk.Button(
         delete, text="Refresh Snippets", command=lambda: reload(exclude_tree)
     )
+
     exclude_button.grid(column=0, row=3, sticky="ew")
     refresh_exclude.grid(column=0, row=3, sticky="ne")
     return exclude_tree
