@@ -164,15 +164,17 @@ def main():
         action="store",
         nargs='*'
     )
-    parser_clone.add_argument(
+
+    parser_update = subparser.add_parser(
+        "update", help="Update a specific CSS snippet."
+    )
+    parser_update.add_argument(
+        "--only",
         "--select",
         "--s",
         help="Use only selectionned file",
         action="store",
         nargs='+'
-        )
-    parser_update = subparser.add_parser(
-        "update", help="Update a specific CSS snippet."
     )
     parser_update.add_argument(
         "repository_name",
@@ -231,7 +233,15 @@ def main():
         if len(repo_name) > 0:
             repo_path = Path(repo_name[0])
             pull_message(repo_path)
-            css_file = github_action.move_to_obsidian(repo_path)
+            css_file = []
+            if args.only:
+                for i in args.only:
+                    file = os.path.join(repo_path, i)
+                    if not ".css" in i:
+                        file = i + ".css"
+                    css_file.append(github_action.move_to_obsidian(file))
+            else:
+                css_file = github_action.move_to_obsidian(repo_path)
             if len(css_file) > 0:
                 console.print(f"🎉 [u]{args.repository_name}[/] successfully updated.")
             else:
