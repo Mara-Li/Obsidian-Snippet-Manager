@@ -18,6 +18,9 @@ Information about [executable release](https://github.com/Mara-Li/Obsidian-Snipp
 - The executable don't use the same environment file as the package : You need to configure two times if you use the two (CLI + executable released)
 - Delete the release delete the environment file. Beware when you update your executable.
 
+You can select the files you want to update or clone. Also, you can exclude specific file from update, instead of entire folder.
+Note : When you clone a repo, select some files don't exclude them. If you **really** don't want them, exclude them using the tab exclude. 
+
 ---
 
 # CLI
@@ -30,18 +33,20 @@ This folder can be everywhere on your computer (yes, it can be in `.obsidian` to
 
 ## How to use
 1. Adding a new repo : `obsnipe clone repository_url`  
-    Additionally, you can exclude a folder from update with adding the `--exclude` command : `obsnipe clone --excluded [repository_url]`
+    Additionally, you can exclude a folder from update with adding the `--exclude` command : `obsnipe clone [repository_url] --excluded`  
+    This command work also for file : `obsnipe clone [repository_url] --excluded file.css`. This file will be added to `exclude.yml`. 
 2. Updating everything : `obsnipe`
 3. Updating only a repository : `obsnipe update folder_name` 
-    The folder name is the folder that you wish to update the snippet!
+    The folder name is the folder that you wish to update the snippet!  
+    Also, you can update only a specific file with `obsnipe update [foldername] --only [filename]`
 
 The script will :
 - Git pull 
-- Git move every `.css` file in your `.obsidian/snippet` folder. 
+- Git move every `.css` (unless the excluded) file in your `.obsidian/snippet` folder.
 
 ## Other function
 - `obsnipe list` : List all GitHub Repository you download.
-- `obsnipe exclude [folder_name]` : Exclude a folder from update. You can exclude multiple value using : `obsnipe exclude [folder1] [folder2]`
+- `obsnipe exclude [folder_name]` : Exclude a folder or a css snippet from update. You can exclude multiple value using : `obsnipe exclude [folder1] [filename2]`
 
 Note : You can exclude a folder from auto-update using the `exclude.yml` file, placed in your Snippet Manager folder. 
 You need to add the folder name as a yaml list :
