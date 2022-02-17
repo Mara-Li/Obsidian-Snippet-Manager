@@ -161,8 +161,16 @@ def main():
         "--e",
         "--no",
         help="Exclude this repository from update",
-        action="store_true",
+        action="store",
+        nargs='*'
     )
+    parser_clone.add_argument(
+        "--select",
+        "--s",
+        help="Use only selectionned file",
+        action="store",
+        nargs='+'
+        )
     parser_update = subparser.add_parser(
         "update", help="Update a specific CSS snippet."
     )
@@ -196,12 +204,20 @@ def main():
     if args.cmd == "clone":
         repo_path = clone_message(args.repository, BASEDIR)
         if repo_path != "0" and repo_path != "Already exists":
+            if args.excluded is not None:
+                if len(args.excluded) > 0:
+                    for i in args.excluded:
+                        if i.endswith('.css'):
+                            github_action.exclude_folder(i)
+                        else:
+                            file = i + '.css'
+                            github_action.exclude_folder(file)
             css_file = github_action.move_to_obsidian(repo_path)
             if len(css_file) > 0:
                 console.print(
                     f"🎉 [u]{args.repository}[/] successfull added to Obsidian."
                 )
-                if args.excluded:
+                if args.excluded is not None and len(args.excluded) > 0:
                     github_action.exclude_folder(repo_path)
             else:
                 console.print(f"🤨 There is no CSS file in {args.repository}.")
