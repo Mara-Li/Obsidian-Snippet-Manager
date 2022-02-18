@@ -73,7 +73,7 @@ def move_to_obsidian(repo_path):
             for x in glob(os.path.join(str(repo_path), "**"), recursive=True)
             if x not in exclude and x.endswith("css")
         ]
-    elif os.path.isfile(repo_path):
+    elif os.path.isfile(repo_path) and not repo_path in exclude:
         css_files = [repo_path]
     if len(css_files) > 0:
         for i in css_files:
