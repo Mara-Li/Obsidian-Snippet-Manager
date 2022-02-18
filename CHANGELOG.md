@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v2.3.1 (2022-02-18)
+### Fix
+* **gui:** Fix environment error ([`3366e81`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3366e81e676c68745ba5476d88c564f2ce68285b))
+* **gui:** PhotoImage has problem with garbage collector if assigned in local variable. ([`cb3bec4`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/cb3bec423e7bb17168a10205afceffd02dbe69b9))
+
+### Documentation
+* **readme:** Warn user about windows alert ([`7824ad8`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/7824ad86573cf0e2f3f8c4115725da1dd913d188))
+
 ## v2.3.0 (2022-02-18)
 ### Feature
 * **cli:** Add "add" argument to add element to exclude.yml ([`8ff469f`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/8ff469fe6172f6ec1742d6b1571b5c5dda28a47c))
