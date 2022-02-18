@@ -120,6 +120,9 @@ def pull_message(repo_path):
         print(f":warning: [red] Git returns an error :[/] {exc}")
 
 
+def cli_clone():
+
+
 def main():
     """
     Main function used in CLI
@@ -167,11 +170,17 @@ def main():
         "--excluded",
         "--e",
         "--no",
-        help="Exclude this repository from update",
+        help="Exclude this repository or file from update",
         action="store",
         nargs="*",
     )
-
+    parser_clone.add_argument(
+        "--select",
+        "--s",
+        help="Download only these snippets",
+        action="store",
+        nargs="*"
+    )
     parser_update = subparser.add_parser(
         "update", help="Update a specific CSS snippet."
     )
@@ -213,15 +222,23 @@ def main():
     if args.cmd == "clone":
         repo_path = clone_message(args.repository, BASEDIR)
         if repo_path != "0" and repo_path != "Already exists":
-            if args.excluded is not None:
-                if len(args.excluded) > 0:
-                    for i in args.excluded:
-                        if i.endswith(".css"):
-                            github_action.exclude_folder(i)
-                        else:
-                            file = i + ".css"
-                            github_action.exclude_folder(file)
-            css_file = github_action.move_to_obsidian(repo_path)
+            if args.excluded is not None and len(args.excluded) > 0:
+                for i in args.excluded:
+                    if not i.endswith(".css"):
+                        i = i + ".css"
+                    github_action.exclude_folder(i)
+            if args.select is not None and len(args.select) > 0:
+                all_file = [x for x in glob(os.path.join(repo_path, "**"), recursive=True) if x.endswith('css')]
+                css_file = []
+                for i in args.select:
+                    if not i.endswith('.css'):
+                        i = i + '.css'
+                    pathfile = [x for x in all_file if os.path.basename(x) == i]
+                    if pathfile:
+                        file=pathfile[0]
+                        css_file.append(github_action.move_to_obsidian(file))
+            else:
+                css_file = github_action.move_to_obsidian(repo_path)
             if len(css_file) > 0:
                 console.print(
                     f"🎉 [u]{args.repository}[/] successfull added to Obsidian."
@@ -243,11 +260,17 @@ def main():
                 pull_message(repo_path)
                 css_file = []
                 if args.only:
+                    all_file = [x for x in
+                                glob(os.path.join(repo_path, "**"), recursive=True) if
+                                x.endswith('css')]
+
                     for j in args.only:
-                        file = os.path.join(repo_path, j)
                         if not ".css" in j:
-                            file = j + ".css"
-                        css_file.append(github_action.move_to_obsidian(file))
+                            j = j + ".css"
+                        file = [x for x in all_file if os.path.basename(x) == j]
+                        if file:
+                            j = file[0]
+                        css_file.append(github_action.move_to_obsidian(j))
                 else:
                     css_file = github_action.move_to_obsidian(repo_path)
                 if len(css_file) > 0:
