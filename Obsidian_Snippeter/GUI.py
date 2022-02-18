@@ -43,7 +43,7 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
             "#0",
             text="Unselect all snippets",
             anchor=tk.CENTER,
-            command=lambda: switch(file_tree),
+            command=lambda: switch(file_tree, True),
         )
         file_tree.insert("", "end", "Snippets")
         file_repo = [
@@ -102,7 +102,7 @@ def get_environment():
     :return: vault : Path / Basedir : Path
     """
     VAULT, BASEDIR = envi.get_environments()
-    if len(str(VAULT)) == 0 or len(str(BASEDIR)) == 0:
+    if len(str(VAULT)) == 0 or len(str(BASEDIR)) == 0 or not os.path.isdir(VAULT) or not os.path.isdir(BASEDIR):
         return "", ""
     return VAULT, BASEDIR
 
@@ -162,11 +162,14 @@ def obsidian_to_css(
     repo_path, repo_name, not_excluded, tree, exclude_tree, clone_exclude
 ):
     css_file = []
+
     for i in not_excluded:
-        css_file = gt.move_to_obsidian(i)
-        css_file = [os.path.basename(x) for x in css_file]
+        css_files = gt.move_to_obsidian(i)
+        css_file.append(css_files)
+    css_file = sum(css_file, [])
+    css_file = [os.path.basename(x) for x in css_file]
     if len(css_file) > 0:
-        css_file = "\n- ".join(css_file) + "\n"
+        css_file = "- " + "\n- ".join(css_file) + "\n"
         if len(css_file) == 1:
             css_file = "".join(css_file)
         showinfo(
@@ -217,7 +220,8 @@ def reload(tree):
     BASEDIR, VAULT = get_environment()
     tree.delete(*tree.get_children())
     all_repo = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
-    traverse_dir(BASEDIR, tree)
+    if BASEDIR != "" or VAULT != "":
+        traverse_dir(BASEDIR, tree)
     if len(all_repo) > 0:
         selection_all(tree)
     tree.heading("#0", text="Unselect all Snippets")
@@ -242,14 +246,18 @@ def unselect_all(tree):
         tree.selection_remove(item)
 
 
-def switch(tree):
+def switch(tree, popup=False):
     """
     Switch between select/deselect
     :param tree: Treeview
+    :param popup: If used in download popup
     :return:
     """
-    if len(tree.get_children()) > 1:
-        if len(tree.selection()) < len(tree.get_children()) - 1:
+    tree_length = len(tree.get_children())
+    if popup:
+        tree_length = tree_length - 1
+    if tree_length > 0:
+        if len(tree.selection()) < tree_length:
             tree.heading("#0", text="Unselect all Snippets")
             selection_all(tree)
         else:
@@ -337,10 +345,13 @@ def exclude_selected(exclude_tree):
         showinfo(title="🎉🎉🎉🎉🎉", message=f"Excluded from future update:{info}")
 
 
-def configuration_menu(config, browse_png):
+def configuration_menu(config, browse_png, BASEDIR, VAULT):
     """
     Create the configuration frame
     :param config: Frame
+    :param browse_png: Image
+    :param BASEDIR: Basedirectory
+    :param VAULT: Vault directory
     :return: /
     """
     config1 = ttk.Label(
@@ -352,7 +363,6 @@ def configuration_menu(config, browse_png):
     )
     config1.grid(row=0, column=1, ipadx=5, sticky=tk.W)
     vault_ui = ttk.Entry(config, font=40)
-    BASEDIR, VAULT = get_environment()
     vault_ui.grid(row=0, column=2, ipadx=100)
     vault_ui.insert("end", str(VAULT))
     b1 = ttk.Button(
@@ -389,12 +399,13 @@ def configuration_menu(config, browse_png):
     b3.grid(row=2, column=2)
 
 
-def clone_menu(clone, tree, exclude_tree):
+def clone_menu(clone, tree, exclude_tree, BASEDIR):
     """
     Create the clone menu
     :param clone: Frame
     :param tree: Clone treeview
     :param exclude_tree: exclude treeview
+    :param BASEDIR: Base directory
     :return:
     """
     clone_url = ttk.Label(
@@ -418,7 +429,6 @@ def clone_menu(clone, tree, exclude_tree):
     )
     clone_exclude_label.grid(row=1, column=1, sticky="w")
     clone_exclude.grid(row=1, column=1, sticky="ne", ipadx=120)
-    BASEDIR, VAULT = get_environment()
     clone_download = ttk.Button(
         clone,
         text="Download",
@@ -455,13 +465,13 @@ def traverse_dir(path, tree, parent=""):
                         traverse_dir(fullpath, tree, node_id)
 
 
-def update_menu(update):
+def update_menu(update, BASEDIR):
     """
     Create the update menu
     :param update: Frame
+    :param BASEDIR: Base directory
     :return: treeview
     """
-    BASEDIR, VAULT = get_environment()
     update.grid_columnconfigure(0, weight=1)
     update.grid_columnconfigure(1, weight=0)
 
@@ -474,7 +484,8 @@ def update_menu(update):
         command=lambda: switch(tree),
     )
     all_repo = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
-    traverse_dir(BASEDIR, tree)
+    if BASEDIR != "":
+        traverse_dir(BASEDIR, tree)
     tree.grid(column=0, row=2, sticky="ew")
     if len(all_repo) > 0:
         tree.selection_set(tree.get_children())
@@ -487,13 +498,13 @@ def update_menu(update):
     return tree
 
 
-def exclude_menu(delete):
+def exclude_menu(delete, BASEDIR):
     """
     Create exclude menu
     :param delete: frame
-    :return: exclude treeviewx
+    :param BASEDIR: Basedirectory
+    :return: exclude treeview
     """
-    BASEDIR, VAULT = get_environment()
     delete.grid_columnconfigure(0, weight=1)
     delete.grid_columnconfigure(1, weight=0)
     all_repo = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
@@ -506,7 +517,8 @@ def exclude_menu(delete):
         anchor=tk.CENTER,
         command=lambda: switch(exclude_tree),
     )
-    traverse_dir(BASEDIR, exclude_tree)
+    if BASEDIR != "":
+        traverse_dir(BASEDIR, exclude_tree)
     exclude_tree.grid(column=0, row=1, columnspan=2, sticky="ew")
     if len(all_repo) > 0:
         exclude_tree.selection_set(exclude_tree.get_children())
@@ -561,10 +573,11 @@ def main():
     browse_path = os.path.join(manager.__path__[0], "src", "gui_bin", "folder.png")
     browse_icon = Image.open(browse_path).resize((18, 18), Image.ANTIALIAS)
     browse_png = ImageTk.PhotoImage(browse_icon)
-    configuration_menu(config, browse_png)
-    tree = update_menu(update)
-    exclude_tree = exclude_menu(delete)
-    clone_menu(clone, tree, exclude_tree)
+    BASEDIR, VAULT = get_environment()
+    configuration_menu(config, browse_png, BASEDIR, VAULT)
+    tree = update_menu(update, BASEDIR)
+    exclude_tree = exclude_menu(delete, BASEDIR)
+    clone_menu(clone, tree, exclude_tree, BASEDIR)
     root.resizable(False, False)
     root.mainloop()
 
