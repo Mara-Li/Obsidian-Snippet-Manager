@@ -122,12 +122,13 @@ def pull_message(repo_path):
 
 def cli_exclude(BASEDIR, exclude_args, add):
     if add is not None and len(add) > 0:
-        all=[x for x in glob(os.path.join(BASEDIR, "**"), recursive=True)]
+        all = [x for x in glob(os.path.join(BASEDIR, "**"), recursive=True)]
         for i in add:
             if i in all:
                 i = os.path.basename(i)
             github_action.exclude_folder(i)
     return exclude_args + read_exclude(BASEDIR)
+
 
 def cli_clone(repo, BASEDIR, console, excluded, select):
     repo_path = clone_message(repo, BASEDIR)
@@ -138,12 +139,15 @@ def cli_clone(repo, BASEDIR, console, excluded, select):
                     i = i + ".css"
                 github_action.exclude_folder(i)
         if select is not None and len(select) > 0:
-            all_file = [x for x in glob(os.path.join(repo_path, "**"), recursive=True) if
-                        x.endswith('css')]
+            all_file = [
+                x
+                for x in glob(os.path.join(repo_path, "**"), recursive=True)
+                if x.endswith("css")
+            ]
             css_file = []
             for i in select:
-                if not i.endswith('.css'):
-                    i = i + '.css'
+                if not i.endswith(".css"):
+                    i = i + ".css"
                 pathfile = [x for x in all_file if os.path.basename(x) == i]
                 if pathfile:
                     file = pathfile[0]
@@ -151,9 +155,7 @@ def cli_clone(repo, BASEDIR, console, excluded, select):
         else:
             css_file = github_action.move_to_obsidian(repo_path)
         if len(css_file) > 0:
-            console.print(
-                f"🎉 [u]{repo}[/] successfull added to Obsidian."
-                )
+            console.print(f"🎉 [u]{repo}[/] successfull added to Obsidian.")
             if excluded is not None and len(excluded) > 0:
                 github_action.exclude_folder(repo_path)
         else:
@@ -161,21 +163,19 @@ def cli_clone(repo, BASEDIR, console, excluded, select):
 
 
 def cli_update(repository_name, BASEDIR, only, console):
-    all_folder = [
-        x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
-        ]
-    repo_name = [
-        x for x in all_folder if os.path.basename(x) in repository_name
-        ]
+    all_folder = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
+    repo_name = [x for x in all_folder if os.path.basename(x) in repository_name]
     if len(repo_name) > 0:
         for i in repo_name:
             repo_path = Path(i)
             pull_message(repo_path)
             css_file = []
             if only:
-                all_file = [x for x in
-                            glob(os.path.join(repo_path, "**"), recursive=True) if
-                            x.endswith('css')]
+                all_file = [
+                    x
+                    for x in glob(os.path.join(repo_path, "**"), recursive=True)
+                    if x.endswith("css")
+                ]
 
                 for j in only:
                     if not ".css" in j:
@@ -187,18 +187,14 @@ def cli_update(repository_name, BASEDIR, only, console):
             else:
                 css_file = github_action.move_to_obsidian(repo_path)
             if len(css_file) > 0:
-                console.print(
-                    f"🎉 [u]{repository_name}[/] successfully updated."
-                    )
+                console.print(f"🎉 [u]{repository_name}[/] successfully updated.")
             else:
-                console.print(
-                    f"🤨 There is no CSS file in [u]{repository_name}[/]."
-                    )
+                console.print(f"🤨 There is no CSS file in [u]{repository_name}[/].")
     else:
         console.print(
             "[u]This repository doesn't exists[/]. Did you use the correct folder"
             " name ?"
-            )
+        )
 
 
 def cli_list(BASEDIR, console):
@@ -217,10 +213,9 @@ def cli_list(BASEDIR, console):
         folder_msg = f"[u]There is no repository in {BASEDIR}[/]"
     console.print(folder_msg)
 
+
 def cli_update_all(BASEDIR, console, exclude):
-    all_folder = [
-        x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)
-    ]
+    all_folder = [x for x in glob(os.path.join(str(BASEDIR), "**")) if os.path.isdir(x)]
     info = []
     for i in all_folder:
         if (
@@ -240,6 +235,7 @@ def cli_update_all(BASEDIR, console, exclude):
             console.print(f"Successfull updated [u]{info}[/]")
     else:
         console.print("🤨 There is no file to update in these repository")
+
 
 def main():
     """
@@ -297,7 +293,7 @@ def main():
         "--s",
         help="Download only these snippets",
         action="store",
-        nargs="*"
+        nargs="*",
     )
     parser_update = subparser.add_parser(
         "update", help="Update a specific CSS snippet."
@@ -332,7 +328,7 @@ def main():
         "--add",
         help="Exclude everytime these file/repo from update",
         action="store",
-        nargs="*"
+        nargs="*",
     )
     args = parser.parse_args()
     if args.cmd == "config":
