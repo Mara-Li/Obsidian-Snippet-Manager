@@ -13,6 +13,18 @@ import git
 from git import Repo, exc
 from Obsidian_Snippeter.src import environment
 
+def read_exclude(BASEDIR):
+    exclude_file = os.path.join(BASEDIR, "exclude.yml")
+    if os.path.isfile(exclude_file):
+        with open(exclude_file, "r", encoding="utf-8") as f:
+            exclude = yaml.safe_load(f)
+        if exclude is None:
+            exclude = []
+    else:
+        f = open(exclude_file, "w", encoding="utf-8")
+        f.close()
+        exclude = []
+    return exclude
 
 def git_clone(repo_url):
     """
@@ -59,11 +71,7 @@ def move_to_obsidian(repo_path):
     VAULT = global_value[1]
     BASEDIR = global_value[0]
     snippets = os.path.join(VAULT, ".obsidian", "snippets")
-    exclude_file = os.path.join(BASEDIR, "exclude.yml")
-    exclude = []
-    if os.path.isfile(exclude_file):
-        with open(exclude_file, "r", encoding="utf-8") as f:
-            exclude = yaml.safe_load(f)
+    exclude = read_exclude(BASEDIR)
     Path(snippets).mkdir(exist_ok=True)  # Create snippets folder if not exists
     # Get all css files
     css_files = []
@@ -73,7 +81,7 @@ def move_to_obsidian(repo_path):
             for x in glob(os.path.join(str(repo_path), "**"), recursive=True)
             if x not in exclude and x.endswith("css")
         ]
-    elif os.path.isfile(repo_path) and not repo_path in exclude:
+    elif os.path.isfile(repo_path) and not str(repo_path) in exclude:
         css_files = [repo_path]
     if len(css_files) > 0:
         for i in css_files:
@@ -91,10 +99,7 @@ def exclude_folder(repo_path):
     BASEDIR = global_value[0]
     excluded = os.path.join(BASEDIR, "exclude.yml")
     repo_name = os.path.basename(repo_path)
-    with open(excluded, "r", encoding="utf-8") as f:
-        excluded_files = yaml.safe_load(f)
-    if not excluded_files:
-        excluded_files = []
+    excluded_files = read_exclude(BASEDIR)
     if repo_name not in excluded_files and repo_name != "":
         excluded_files.append(repo_name)
     with open(excluded, "w", encoding="utf-8") as f:

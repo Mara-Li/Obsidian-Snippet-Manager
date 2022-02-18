@@ -9,7 +9,6 @@ from glob import glob
 from pathlib import Path
 from urllib.parse import urlparse
 
-import yaml
 from rich import print
 from rich.console import Console
 
@@ -17,17 +16,6 @@ import Obsidian_Snippeter as manager
 from Obsidian_Snippeter.src import environment
 from Obsidian_Snippeter.src import github_action
 
-
-def read_exclude(BASEDIR):
-    exclude_file = os.path.join(BASEDIR, "exclude.yml")
-    exclude = []
-    if os.path.isfile(exclude_file):
-        with open(exclude_file, "r", encoding="utf-8") as f:
-            exclude = yaml.safe_load(f)
-    else:
-        f = open(exclude_file, "w", encoding="utf-8")
-        f.close()
-    return exclude
 
 
 def create_env():
@@ -127,7 +115,7 @@ def cli_exclude(BASEDIR, exclude_args, add):
             if i in all:
                 i = os.path.basename(i)
             github_action.exclude_folder(i)
-    return exclude_args + read_exclude(BASEDIR)
+    return exclude_args + github_action.read_exclude(BASEDIR)
 
 
 def cli_clone(repo, BASEDIR, console, excluded, select):

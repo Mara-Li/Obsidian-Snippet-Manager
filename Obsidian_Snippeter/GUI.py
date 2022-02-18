@@ -9,7 +9,6 @@ from tkinter import ttk, filedialog
 from tkinter.messagebox import showerror, showinfo
 from urllib.parse import urlparse
 
-import yaml
 from PIL import Image
 from PIL import ImageTk
 from ttkthemes import ThemedTk
@@ -34,14 +33,15 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
     folder_name, folder_path = download(url)
     if folder_path != "0":
         pop_list = tk.Toplevel(frame)
-        pop_list.title("Exclude CSS")
+        pop_list.resizable(False, False)
+        pop_list.title("Choose your CSS")
+        pop_list.grid_columnconfigure(1, weight=2)
         pop_list.grid_columnconfigure(0, weight=1)
-        pop_list.grid_columnconfigure(1, weight=0)
         file_tree = ttk.Treeview(pop_list)
         file_tree.column("#0")
         file_tree.heading(
             "#0",
-            text="Select all snippets",
+            text="Unselect all snippets",
             anchor=tk.CENTER,
             command=lambda: switch(file_tree),
         )
@@ -55,7 +55,7 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
             tupled = (str(name),)
             snippet_name = os.path.basename(name)
             file_tree.insert("", i, text=snippet_name, values=tupled)
-        file_tree.grid(column=0, row=1, sticky="ew")
+        file_tree.grid(column=0, row=1, columnspan=2)
 
         if len(file_repo) > 0:
             file_tree.selection_set(file_tree.get_children())
@@ -66,7 +66,13 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
                 folder_path, folder_name, file_tree, tree, exclude_tree, clone_exclude
             ),
         )
-        exclude_button.grid(row=2, column=0, sticky="ew")
+        add_to_exclude = ttk.Button(
+            pop_list,
+            text="Add to excluded",
+            command=lambda: exclude_selected(file_tree),
+        )
+        exclude_button.grid(row=2, column=0, ipadx=3)
+        add_to_exclude.grid(column=1, row=2)
 
 
 def git_pull(repo_path):
@@ -158,9 +164,10 @@ def obsidian_to_css(
     css_file = []
     for i in not_excluded:
         css_file = gt.move_to_obsidian(i)
+        css_file = [os.path.basename(x) for x in css_file]
     if len(css_file) > 0:
-        css_file = "\n- ".join(css_file)
-        if len(css_file) == 0:
+        css_file = "\n- ".join(css_file) + "\n"
+        if len(css_file) == 1:
             css_file = "".join(css_file)
         showinfo(
             title="🎉🎉🎉🎉🎉",
@@ -274,14 +281,7 @@ def update_selected(tree):
     """
     BASEDIR, VAULT = get_environment()
     data = tree.selection()
-    exclude_file = os.path.join(BASEDIR, "exclude.yml")
-    if os.path.isfile(exclude_file):
-        with open(exclude_file, "r", encoding="utf-8") as f:
-            exclude = yaml.safe_load(f)
-    else:
-        f = open(exclude_file, "w", encoding="utf-8")
-        f.close()
-        exclude = []
+    exclude = gt.read_exclude(BASEDIR)
     info = []
     no_css = []
     git_repo = []
@@ -513,7 +513,7 @@ def exclude_menu(delete):
         command=lambda: switch(exclude_tree),
     )
     traverse_dir(BASEDIR, exclude_tree)
-    exclude_tree.grid(column=0, row=2, sticky="ew")
+    exclude_tree.grid(column=0, row=1, columnspan=2, sticky="ew")
     if len(all_repo) > 0:
         exclude_tree.selection_set(exclude_tree.get_children())
     exclude_button = ttk.Button(
@@ -569,7 +569,7 @@ def main():
     tree = update_menu(update)
     exclude_tree = exclude_menu(delete)
     clone_menu(clone, tree, exclude_tree)
-
+    root.resizable(False, False)
     root.mainloop()
 
 
