@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v2.3.0 (2022-02-18)
+### Feature
+* **cli:** Add "add" argument to add element to exclude.yml ([`8ff469f`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/8ff469fe6172f6ec1742d6b1571b5c5dda28a47c))
+
+### Fix
+* Fix yaml safeload None error ([`15208fd`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/15208fd76bb8f879be169567e2d54b097f32d0e1))
+* **cli:** Fix lack '.css' for exclude --add ([`572efff`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/572efffb7a46493dc5f41d9c6af26fc64fc3827c))
+* **cli:** Add select file when cloning (don't exclude when update) ([`49a7d86`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/49a7d86fe809c26845f190257097c6d325947d1f))
+
+### Documentation
+* **README:** Add info ([`03964e4`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/03964e48414b130d064cb1dbb5a10accc591e8a6))
+
 ## v2.2.0 (2022-02-17)
 ### Feature
 * **cli:** Update only snippet from selected repository ([`b2359a2`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/b2359a298feae2efe8fde6a4a4467adba456f3e8))
