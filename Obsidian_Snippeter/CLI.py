@@ -17,7 +17,6 @@ from Obsidian_Snippeter.src import environment
 from Obsidian_Snippeter.src import github_action
 
 
-
 def create_env():
     """
     Create environment variable with :

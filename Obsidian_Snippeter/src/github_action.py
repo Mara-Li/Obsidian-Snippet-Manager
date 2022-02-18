@@ -13,6 +13,7 @@ import git
 from git import Repo, exc
 from Obsidian_Snippeter.src import environment
 
+
 def read_exclude(BASEDIR):
     exclude_file = os.path.join(BASEDIR, "exclude.yml")
     if os.path.isfile(exclude_file):
@@ -25,6 +26,7 @@ def read_exclude(BASEDIR):
         f.close()
         exclude = []
     return exclude
+
 
 def git_clone(repo_url):
     """
