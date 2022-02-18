@@ -21,10 +21,24 @@ Information about [executable release](https://github.com/Mara-Li/Obsidian-Snipp
 You can select the files you want to update or clone. Also, you can only use some specific file from update, instead of entire folder.
 You can exclude them from futur update using the exclude button.
 
+# Note about windows alert
+For some reason, windows will warn you about untrustable executable. Also, it's possible that your antivir' doesn't like it either.
+The executable is built using GitHub Action : I don't touch it. You can, also, check every file in the download if you don't trust me.
+The only data send to internet is for git clone and push.
 
+The (short) story about certification and untrustable executable : Microsoft want me to pay a lot to sign a little executable. 
+More information about signing on [Microsoft Docs](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537361(v=vs.85)?redirectedfrom=MSDN)
+
+[A free signing will always force end-user to manually install the certificate on their machine](https://stackoverflow.com/questions/252226/signing-a-windows-exe-file)
+
+If you don't trust me : You can build yourself the executable using :
+`pyinstaller Obsidian_Snippeter/GUI.py --name "Obsidian-Snippet-Manager" --windowed --i Obsidian_Snippeter/src/gui_bin/hand.ico --noconfirm --add-data 'Obsidian_Snippeter/src/gui_bin/*;Obsidian_Snippeter/src/gui_bin/' --distpath artifact` after cloning. 
+You will see the same error.
+I have **too** this error.
+
+(Note that you won't see it using the terminal commands 😊)
 
 ---
-
 # CLI
 ## Environment
 The plugin needs :
