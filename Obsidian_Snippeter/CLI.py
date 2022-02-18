@@ -122,7 +122,10 @@ def pull_message(repo_path):
 
 def cli_exclude(BASEDIR, exclude_args, add):
     if add is not None and len(add) > 0:
+        all=[x for x in glob(os.path.join(BASEDIR, "**"), recursive=True)]
         for i in add:
+            if i in all:
+                i = os.path.basename(i)
             github_action.exclude_folder(i)
     return exclude_args + read_exclude(BASEDIR)
 
