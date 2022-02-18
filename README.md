@@ -9,7 +9,7 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 3. `pip install Obsidian-Snippet-Manager --upgrade`
 
 # GUI
-![](screenshot/GUI_snippeter.gif)
+![](screenshot/demo2.gif)
 
 You can use the application with an interface, using (in terminal): `snipetter`.
 
@@ -18,8 +18,10 @@ Information about [executable release](https://github.com/Mara-Li/Obsidian-Snipp
 - The executable don't use the same environment file as the package : You need to configure two times if you use the two (CLI + executable released)
 - Delete the release delete the environment file. Beware when you update your executable.
 
-You can select the files you want to update or clone. Also, you can exclude specific file from update, instead of entire folder.
-Note : When you clone a repo, select some files don't exclude them. If you **really** don't want them, exclude them using the tab exclude. 
+You can select the files you want to update or clone. Also, you can only use some specific file from update, instead of entire folder.
+You can exclude them from futur update using the exclude button.
+
+
 
 ---
 
@@ -32,6 +34,7 @@ This folder can be everywhere on your computer (yes, it can be in `.obsidian` to
     _In case of the folder doesn't exist, the script will create it!_
 
 ## How to use
+
 1. Adding a new repo : `obsnipe clone repository_url`  
     Additionally, you can exclude a folder from update with adding the `--exclude` command : `obsnipe clone [repository_url] --excluded`  
     This command work also for file : `obsnipe clone [repository_url] --excluded file.css`. This file will be added to `exclude.yml`. 
@@ -46,7 +49,8 @@ The script will :
 
 ## Other function
 - `obsnipe list` : List all GitHub Repository you download.
-- `obsnipe exclude [folder_name]` : Exclude a folder or a css snippet from update. You can exclude multiple value using : `obsnipe exclude [folder1] [filename2]`
+- `obsnipe exclude [folder_name]` : Exclude a folder or a css snippet from update. You can exclude multiple value using : `obsnipe exclude [folder1] [filename2]`  
+    Using `-add [filename][folder]` will add these file in `exclude.yml`
 
 Note : You can exclude a folder from auto-update using the `exclude.yml` file, placed in your Snippet Manager folder. 
 You need to add the folder name as a yaml list :
