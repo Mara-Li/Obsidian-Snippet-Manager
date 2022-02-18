@@ -337,16 +337,12 @@ def exclude_selected(exclude_tree):
         showinfo(title="🎉🎉🎉🎉🎉", message=f"Excluded from future update:{info}")
 
 
-def configuration_menu(config):
+def configuration_menu(config, browse_png):
     """
     Create the configuration frame
     :param config: Frame
     :return: /
     """
-    browse_path = os.path.join(manager.__path__[0], "src", "gui_bin", "folder.png")
-    browse_icon = Image.open(browse_path).resize((18, 18), Image.ANTIALIAS)
-    browse_png = ImageTk.PhotoImage(browse_icon)
-
     config1 = ttk.Label(
         config,
         text="Vault Path",
@@ -361,7 +357,6 @@ def configuration_menu(config):
     vault_ui.insert("end", str(VAULT))
     b1 = ttk.Button(
         config,
-        text="browse",
         command=lambda: browsefunc(vault_ui, config),
         image=browse_png,
         padding=3,
@@ -382,7 +377,6 @@ def configuration_menu(config):
 
     b2 = ttk.Button(
         config,
-        text="browse",
         command=lambda: browsefunc(manager_ui, config),
         image=browse_png,
         padding=3,
@@ -564,8 +558,10 @@ def main():
     menu.add(clone, text="Clone")
     menu.add(delete, text="Exclude")
     menu.add(config, text="Configuration")
-
-    configuration_menu(config)
+    browse_path = os.path.join(manager.__path__[0], "src", "gui_bin", "folder.png")
+    browse_icon = Image.open(browse_path).resize((18, 18), Image.ANTIALIAS)
+    browse_png = ImageTk.PhotoImage(browse_icon)
+    configuration_menu(config, browse_png)
     tree = update_menu(update)
     exclude_tree = exclude_menu(delete)
     clone_menu(clone, tree, exclude_tree)
