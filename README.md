@@ -10,9 +10,17 @@ The goal is to provide a practical way to get semi-auto-update from CSS snippet 
 
 # GUI
 ![](screenshot/demo2.gif)
-
 You can use the application with an interface, using (in terminal): `snipetter`.
 
+## Configuration
+The first step is to configure the app. 
+1. Browse for your Obsidian's vault path.
+2. Create a folder where you can store everything related to downloaded's snippet. This folder can be everywhere on your computer, including in your `.obsidian/snippets`. 
+3. Browse the "Folder Manager" and look for the new created folder.
+4. Click on save !
+![image](https://user-images.githubusercontent.com/30244939/156018113-9d3c26e2-43fa-4c0b-8a1c-b969ca2848e9.png)
+
+## Limitation of [executable release](https://github.com/Mara-Li/Obsidian-Snippet-Manager/releases)
 Information about [executable release](https://github.com/Mara-Li/Obsidian-Snippet-Manager/releases):
 - It will don't install the CLI command, so you won't have the [Obsidian-Shell auto-update](README.md#in-obsidian).
 - The executable don't use the same environment file as the package : You need to configure two times if you use the two (CLI + executable released)
@@ -21,7 +29,7 @@ Information about [executable release](https://github.com/Mara-Li/Obsidian-Snipp
 You can select the files you want to update or clone. Also, you can only use some specific file from update, instead of entire folder.
 You can exclude them from futur update using the exclude button.
 
-# Note about windows alert
+### Note about windows alert
 For some reason, windows will warn you about untrustable executable. Also, it's possible that your antivir' doesn't like it either.
 The executable is built using GitHub Action : I don't touch it. You can, also, check every file in the download if you don't trust me.
 The only data send to internet is for git clone and push.
