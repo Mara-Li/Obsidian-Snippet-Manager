@@ -17,7 +17,8 @@ The first step is to configure the app.
 1. Browse for your Obsidian's vault path.
 2. Create a folder where you can store everything related to downloaded's snippet. This folder can be everywhere on your computer, including in your `.obsidian/snippets`. 
 3. Browse the "Folder Manager" and look for the new created folder.
-4. Click on save !
+4. Click on save !  
+  
 ![image](https://user-images.githubusercontent.com/30244939/156018113-9d3c26e2-43fa-4c0b-8a1c-b969ca2848e9.png)
 
 ## Limitation of [executable release](https://github.com/Mara-Li/Obsidian-Snippet-Manager/releases)
