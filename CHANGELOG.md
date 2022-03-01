@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.3.2 (2022-03-01)
+### Fix
+* **cli:** Fix scss downloading ([`de78ce6`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/de78ce699173aa6f14b3a32eb9332ea7a0d98c76))
+* **gui:** Prevent "scss" download in list ([`e9f41ca`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/e9f41ca6c58874eeed031b440fc5d3bdd888128f))
+* **gui:** Fix popup don't close after clone. ([`3003bab`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3003babbe76c64213d4899037b050112cc767495))
+
 ## v2.3.1 (2022-02-18)
 ### Fix
 * **gui:** Fix environment error ([`3366e81`](https://github.com/Mara-Li/Obsidian-Snippet-Manager/commit/3366e81e676c68745ba5476d88c564f2ce68285b))
