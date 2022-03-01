@@ -49,7 +49,7 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
         file_repo = [
             x
             for x in glob(os.path.join(BASEDIR, str(folder_name), "**"), recursive=True)
-            if x.endswith("css")
+            if x.endswith(".css")
         ]
         for i, name in enumerate(file_repo):
             tupled = (str(name),)
@@ -454,7 +454,7 @@ def traverse_dir(path, tree, parent=""):
         fullpath = os.path.join(path, file)
         if not ".git" in fullpath:
             if check_folder_contents(fullpath):
-                if fullpath.endswith("css") or os.path.isdir(fullpath):
+                if fullpath.endswith(".css") or os.path.isdir(fullpath):
                     node_id = tree.insert(
                         parent,
                         "end",
