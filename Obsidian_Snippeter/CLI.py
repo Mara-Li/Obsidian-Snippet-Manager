@@ -129,7 +129,7 @@ def cli_clone(repo, BASEDIR, console, excluded, select):
             all_file = [
                 x
                 for x in glob(os.path.join(repo_path, "**"), recursive=True)
-                if x.endswith("css")
+                if x.endswith(".css")
             ]
             css_file = []
             for i in select:
@@ -161,7 +161,7 @@ def cli_update(repository_name, BASEDIR, only, console):
                 all_file = [
                     x
                     for x in glob(os.path.join(repo_path, "**"), recursive=True)
-                    if x.endswith("css")
+                    if x.endswith(".css")
                 ]
 
                 for j in only:
