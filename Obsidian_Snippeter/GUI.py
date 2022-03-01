@@ -18,14 +18,14 @@ from Obsidian_Snippeter.src import environment as envi
 from Obsidian_Snippeter.src import github_action as gt
 
 
-def select_snippet(repo_path, repo_name, file_tree, tree, exclude_tree, clone_exclude):
+def select_snippet(repo_path, repo_name, file_tree, tree, exclude_tree, clone_exclude, popup_list):
     not_snippet = [
         file_tree.item(i)["values"][0]
         for i in file_tree.selection()
         if len(file_tree.item(i)["values"]) > 0
     ]
     obsidian_to_css(
-        repo_path, repo_name, not_snippet, tree, exclude_tree, clone_exclude
+        repo_path, repo_name, not_snippet, tree, exclude_tree, clone_exclude, popup_list
     )
 
 
@@ -63,7 +63,7 @@ def pop_up_exclude(frame, BASEDIR, url, tree, exclude_tree, clone_exclude):
             pop_list,
             text="Clone snippets",
             command=lambda: select_snippet(
-                folder_path, folder_name, file_tree, tree, exclude_tree, clone_exclude
+                folder_path, folder_name, file_tree, tree, exclude_tree, clone_exclude, pop_list
             ),
         )
         add_to_exclude = ttk.Button(
@@ -159,7 +159,7 @@ def save_env(vault, folder_snippet):
 
 
 def obsidian_to_css(
-    repo_path, repo_name, not_excluded, tree, exclude_tree, clone_exclude
+    repo_path, repo_name, not_excluded, tree, exclude_tree, clone_exclude, popup_list
 ):
     css_file = []
 
@@ -178,6 +178,7 @@ def obsidian_to_css(
         )
         reload(tree)
         reload(exclude_tree)
+        popup_list.quit()
         if clone_exclude.instate(["selected"]):
             gt.exclude_folder(repo_path)
     else:
