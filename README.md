@@ -15,7 +15,7 @@ You can use the application with an interface, using (in terminal): `snipetter`.
 ## Configuration
 The first step is to configure the app. 
 1. Browse for your Obsidian's vault path.
-2. Create a folder where you can store everything related to downloaded's snippet. This folder can be everywhere on your computer, including in your `.obsidian/snippets`. 
+2. Create a folder where you can store everything related to downloaded's snippet. This folder can be everywhere on your computer, including in your `.obsidian/snippets`.
 3. Browse the "Folder Manager" and look for the new created folder.
 4. Click on save !  
   
